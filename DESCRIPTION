@@ -1,0 +1,22 @@
+Package: rcoder
+Type: Package
+Title: Lightweight data structure for recoding categorical data without factors
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Patrick", "Anker", , "psanker@nyu.edu", c("aut", "cre")),
+    person("Global TIES for Children", role = "cph")
+    )
+Description: A data structure and toolkit for documenting and recoding
+    categorical data that can be shared in other statistical software.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    rlang,
+    glue
+Suggests: 
+    testthat (>= 2.1.0),
+    tibble,
+    dplyr,
+    tidyfast
+RoxygenNote: 6.1.1
