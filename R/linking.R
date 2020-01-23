@@ -1,13 +1,14 @@
+#' @export
 link_codings <- function(to, from, to_suffix = "to", drop_unused = TRUE) {
-    stopifnot(is.coding(to))
+    rc_assert(is.coding(to))
 
     if (!is.coding(from)) {
         if (!is.list(from)) {
-            abort("`from` must be a coding or list of codings.")
+            rc_err("`from` must be a coding or list of codings.")
         }
 
         if (!all(vlapply(from, is.coding))) {
-            abort("Not all of `from` is a coding object.")
+            rc_err("Not all of `from` is a coding object.")
         }
     }
 
@@ -20,7 +21,7 @@ link_codings <- function(to, from, to_suffix = "to", drop_unused = TRUE) {
     to_dat <- as.data.frame(to, to_suffix)
 
     if (nrow(to_dat) < nrow(from_dat)) {
-        abort("Not all cases covered while linking codings.")
+        rc_err("Not all cases covered while linking codings.")
     }
 
     if (isTRUE(drop_unused)) {
@@ -57,6 +58,7 @@ drop_unused_links <- function(to_dat, from_dat) {
     to_dat[to_links %in% from_links, ]
 }
 
+#' @export
 make_recode_query <- function(linked_codings, wave, to_suffix = "to", ...) {
     stopifnot(inherits(linked_codings, "linked_coding_df"))
 
@@ -75,14 +77,14 @@ make_recode_query <- function(linked_codings, wave, to_suffix = "to", ...) {
     to_columns <- grep(to_column_patterns, names(linked_codings), value = TRUE)
 
     if (length(wave_columns) < 1) {
-        abort(glue( "Wave '{wave}' not found in linked coding data.frame."))
+        rc_err("Wave '{wave}' not found in linked coding data.frame.")
     }
 
     if (length(to_columns) < 1) {
-        abort(glue(
+        rc_err(c(
             "'to' columns for linked coding data.frame not found.\n",
             "Perhaps '{to_suffix}' is not the 'to' column ",
-            "tag you chose?",
+            "tag you chose?"
         ))
     }
 

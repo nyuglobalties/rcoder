@@ -1,6 +1,4 @@
 # Standard infix operators
-`%not_in%` <- function(x, y) !x %in% y
-
 `%||%` <- function(x, y) if (is.null(x)) y else x
 
 `%==%` <- function(x, y) identical(x, y)
@@ -19,4 +17,29 @@ is_positive_integer <- function(x) {
 
     isTRUE(all.equal(rep(0, length(x)), x %% 1)) &&
         all(x > 0)
+}
+
+ui_value <- function(x) {
+    paste0("'", x, "'")
+}
+
+rc_err <- function(x, .envir = parent.frame()) {
+    msg <- glue(glue_collapse(x), .envir = .envir)
+
+    rlang::abort(.subclass = "rc_error", message = msg)
+}
+
+rc_assert <- function(x, msg = NULL, .envir = parent.frame()) {
+    if (is.null(msg)) {
+        deparsed <- deparse(substitute(x))
+        msg <- glue("Assertion {ui_value(deparsed)} not met")
+    } else {
+        msg <- glue(glue_collapse(msg, "\n"), .envir = .envir)
+    }
+
+    if (!isTRUE(x)) {
+        rc_err(msg)
+    }
+
+    invisible()
 }

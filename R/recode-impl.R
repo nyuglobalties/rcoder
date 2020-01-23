@@ -1,14 +1,16 @@
+#' @export
 recode_function <- function(wave_vec, 
                             to_vec, 
                             ..., 
                             .engine = names(default_engines), 
                             .engines = default_engines) {
-    stopifnot(length(wave_vec) == length(to_vec), length(wave_vec) > 0)
+    rc_assert(length(wave_vec) == length(to_vec))
+    rc_assert(length(wave_vec) > 0)
 
     .engine <- match.arg(.engine)
 
     if (!is.function(.engines[[.engine]])) {
-        abort(glue("'{engine}' found, but engine is not a function."))
+        rc_err("'{engine}' found, but engine is not a function.")
     }
 
     .engines[[.engine]](wave_vec, to_vec, ...)
