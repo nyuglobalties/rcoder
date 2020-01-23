@@ -20,3 +20,9 @@ test_that("coding creation makes sense", {
     expect_rc_error(coding(code("Yes", "Yes"), code("No", 1)))
     expect_rc_error(coding(code("Yes", 1), code("Yes", 0)))
 })
+
+test_that("Safe coding evaluation works", {
+    expr <- bquote(coding(code("Yes", 1), code("No", 2)))
+
+    expect_identical(eval_coding(expr), coding(code("Yes", 1), code("No", 2)))
+})

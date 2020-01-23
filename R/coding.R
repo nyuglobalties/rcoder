@@ -178,3 +178,13 @@ print.coding <- function(coding) {
 
     invisible()
 }
+
+#' @export
+eval_coding <- function(expr) {
+    rc_assert(rlang::is_expression(expr))
+
+    safe_env <- rlang::new_environment(parent = emptyenv())
+    rlang::env_bind(safe_env, code = code, coding = coding)
+
+    rlang::eval_bare(expr, env = safe_env)
+}
