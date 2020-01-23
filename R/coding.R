@@ -37,6 +37,7 @@ code <- function(label,
     )
 }
 
+#' @export
 print.code <- function(x, ...) {
     cat("<Code>\n")
     print(glue("label: {ui_value(x$label)}"))
@@ -167,6 +168,7 @@ as.data.frame.coding <- function(coding, suffix = NULL) {
     out
 }
 
+#' @export
 print.coding <- function(coding) {
     cat("<Coding>\n")
 
