@@ -1,42 +1,46 @@
 context("linking")
 
 test_that("from only accepts a coding or list of codings", {
-    coding_1 <- coding(
-        code("Yes", 1), 
-        code("No", 0), 
-        code("Not present", -99), 
-        code("Refused", -88),
-        code("Don't know", -77)
+  coding_1 <- coding(
+    code("Yes", 1), 
+    code("No", 0), 
+    code("Not present", -99), 
+    code("Refused", -88),
+    code("Don't know", -77)
+  )
+
+  coding_2 <- coding(
+    code("Yes", "YES"),
+    code("No", "NO"),
+    code("No response", "N/A")
+  )
+
+  coding_master <- coding(
+    code("Yes", 1),
+    code("No", 0),
+    code(
+      "Missing", 
+      NA, 
+      links_from = c(
+        "Not present",
+        "Refused",
+        "Don't know",
+        "No response"
+      )
     )
+  )
 
-    coding_2 <- coding(
-        code("Yes", "YES"),
-        code("No", "NO"),
-        code("No response", "N/A")
-    )
+  expect_error(link_codings(coding_master, list("bad")))
+  expect_error(link_codings(coding_master, "more bad"))
 
-    coding_master <- coding(
-        code("Yes", 1),
-        code("No", 0),
-        code("Missing", NA, links_from = c(
-            "Not present",
-            "Refused",
-            "Don't know",
-            "No response"
-        ))
-    )
+  test_tbl <- tibble::tribble(
+    ~ link, ~ label_to, ~ value_to, ~ description_to,     ~ label_1, ~ value_1, ~ description_1,
+    "Don't know",  "Missing",         NA,        "Missing",  "Don't know",       -77,    "Don't know",
+    "No",       "No",          0,             "No",          "No",         0,            "No",
+    "Not present",  "Missing",         NA,        "Missing", "Not present",       -99,   "Not present",
+    "Refused",  "Missing",         NA,        "Missing",     "Refused",       -88,       "Refused",
+    "Yes",      "Yes",          1,            "Yes",         "Yes",         1,           "Yes"
+  )
 
-    expect_error(link_codings(coding_master, list("bad")))
-    expect_error(link_codings(coding_master, "more bad"))
-
-    test_tbl <- tibble::tribble(
-               ~ link, ~ label_to, ~ value_to, ~ description_to,     ~ label_1, ~ value_1, ~ description_1,
-         "Don't know",  "Missing",         NA,        "Missing",  "Don't know",       -77,    "Don't know",
-                 "No",       "No",          0,             "No",          "No",         0,            "No",
-        "Not present",  "Missing",         NA,        "Missing", "Not present",       -99,   "Not present",
-            "Refused",  "Missing",         NA,        "Missing",     "Refused",       -88,       "Refused",
-                "Yes",      "Yes",          1,            "Yes",         "Yes",         1,           "Yes"
-    )
-
-    expect_true(setequal(link_codings(coding_master, coding_1), test_tbl))
+  expect_true(setequal(link_codings(coding_master, coding_1), test_tbl))
 })
