@@ -11,35 +11,35 @@ vcapply <- function(x, f, ...) vapply(x, f, character(1L), ...)
 
 # Positive integer checking.. good for allowing doubles for indexed situations
 is_positive_integer <- function(x) {
-    if (!is.numeric(x)) {
-        return(FALSE)
-    }
+  if (!is.numeric(x)) {
+    return(FALSE)
+  }
 
-    isTRUE(all.equal(rep(0, length(x)), x %% 1)) &&
-        all(x > 0)
+  isTRUE(all.equal(rep(0, length(x)), x %% 1)) &&
+    all(x > 0)
 }
 
 ui_value <- function(x) {
-    paste0("'", x, "'")
+  paste0("'", x, "'")
 }
 
 rc_err <- function(x, .envir = parent.frame()) {
-    msg <- glue(glue_collapse(x), .envir = .envir)
+  msg <- glue(glue_collapse(x), .envir = .envir)
 
-    rlang::abort(.subclass = "rc_error", message = msg)
+  rlang::abort(.subclass = "rc_error", message = msg)
 }
 
 rc_assert <- function(x, msg = NULL, .envir = parent.frame()) {
-    if (is.null(msg)) {
-        deparsed <- deparse(substitute(x))
-        msg <- glue("Assertion {ui_value(deparsed)} not met")
-    } else {
-        msg <- glue(glue_collapse(msg, "\n"), .envir = .envir)
-    }
+  if (is.null(msg)) {
+    deparsed <- deparse(substitute(x))
+    msg <- glue("Assertion {ui_value(deparsed)} not met")
+  } else {
+    msg <- glue(glue_collapse(msg, "\n"), .envir = .envir)
+  }
 
-    if (!isTRUE(x)) {
-        rc_err(msg)
-    }
+  if (!isTRUE(x)) {
+    rc_err(msg)
+  }
 
-    invisible()
+  invisible()
 }
