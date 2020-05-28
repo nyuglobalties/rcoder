@@ -3,6 +3,7 @@ code <- function(label,
                  value,
                  description = label,
                  links_from = label,
+                 missing = FALSE,
                  ...) {
   rc_assert(
     is.character(label), 
@@ -33,6 +34,7 @@ code <- function(label,
       value = value,
       description = description,
       links_from = links_from,
+      missing = missing,
       ...
     ),
     class = "code"
@@ -51,6 +53,10 @@ print.code <- function(x, ...) {
 
   if (!identical(x$links_from, x$label)) {
     print(glue("linking from: [{glue_collapse(ui_value(x$links_from), ', ')}]"))
+  }
+
+  if (isTRUE(x$missing)) {
+    print(glue("Represents a missing value"))
   }
 
   invisible()
@@ -80,7 +86,8 @@ coding <- function(...) {
     rc_err("coding() only accepts code objects as arguments.")
   }
 
-  labels <- vcapply(codes, function(x) x$label)
+  loc_labels <- lapply(seq_along(codes), function(i) list(index = i, label = codes[[i]]$label))
+  labels <- vcapply(loc_labels, function(x) x$label)
 
   if (any(duplicated(labels))) {
     rc_err("Multiple labels set in a single coding. Each label must be unique.")
@@ -96,9 +103,13 @@ coding <- function(...) {
     ))
   }
 
+  locations <- viapply(loc_labels, function(x) x$index)
+  names(locations) <- labels
+
   structure(
     codes,
-    class = "coding"
+    class = "coding",
+    labels = locations
   )
 }
 
@@ -106,7 +117,8 @@ coding <- function(...) {
 empty_coding <- function() {
   structure(
     list(),
-    class = "coding"
+    class = "coding",
+    labels = integer()
   )
 }
 
@@ -117,6 +129,30 @@ is_empty_coding <- function(x) {
 
 is.coding <- function(x) inherits(x, "coding")
 
+labels.coding <- function(x, ...) attr(x, "labels")
+
+select_codes_if <- function(.coding, .p, ...) {
+  rc_assert(is.coding(.coding) && is.function(.p))
+
+  matching_codes <- lapply(.coding, function(code) {
+    if (.p(code, ...)) {
+      code
+    } else {
+      list()
+    }
+  })
+
+  matching_codes <- matching_codes[!vlapply(matching_codes, function(x) identical(x, list()))]
+
+  do.call(coding, matching_codes)
+}
+
+select_codes_by_label <- function(.coding, .labels) {
+  rc_assert(is.character(.labels))
+
+  select_codes_if(.coding, function(code) code$label %in% .labels)
+}
+
 coding_values <- function(coding) {
   stopifnot(is.coding(coding))
 
@@ -125,6 +161,16 @@ coding_values <- function(coding) {
   }
 
   unlist(lapply(coding, function(code) code$value))
+}
+
+missing_codes <- function(coding) {
+  rc_assert(is.coding(coding))
+
+  if (is_empty_coding(coding)) {
+    return(coding)
+  }
+
+  select_codes_if(coding, function(code) isTRUE(code$missing))
 }
 
 coding_contents <- function(coding) {
@@ -174,6 +220,12 @@ as.data.frame.coding <- function(coding, suffix = NULL) {
 
 #' @export
 print.coding <- function(coding) {
+  if (is_empty_coding(coding)) {
+    cat("<Empty Coding>\n")
+
+    return(invisible())
+  }
+
   cat("<Coding>\n")
 
   if (requireNamespace("tibble", quietly = TRUE)) {

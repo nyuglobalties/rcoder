@@ -15,7 +15,7 @@ test_that("code definitions are consistent", {
 })
 
 test_that("coding creation makes sense", {
-    expect_identical(coding(), structure(list(), class = "coding"))
+    expect_identical(coding(), structure(list(), class = "coding", labels = integer()))
     expect_rc_error(coding("Yes", 1))
     expect_rc_error(coding(code("Yes", "Yes"), code("No", 1)))
     expect_rc_error(coding(code("Yes", 1), code("Yes", 0)))
