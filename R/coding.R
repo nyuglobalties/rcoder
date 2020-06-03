@@ -199,6 +199,7 @@ coding_contents <- function(coding) {
   )
 }
 
+#' @export
 as.data.frame.coding <- function(coding, suffix = NULL) {
   contents <- coding_contents(coding)
 
