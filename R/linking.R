@@ -1,3 +1,18 @@
+#' Link a coding from others for recoding
+#'
+#' Coding objects can be linked together to create mappings from one or more
+#' codings to another. This creates a `data.frame` that outlines how the codings
+#' are linked, to be used in `make_recode_query()`.
+#'
+#' @param to A coding to be linked to
+#' @param from A coding or list of codings to be linked from
+#' @param to_suffix A suffix signifying which columns in the output `data.frame`
+#'   came from `to`
+#' @param drop_unused Logical flag to drop any codes in `to` that have no
+#'   counterparts in `from`
+#' @return A `linked_coding_df` with all necessary information for a recoding
+#'   query
+#'
 #' @export
 link_codings <- function(to, from, to_suffix = "to", drop_unused = TRUE) {
   rc_assert(is.coding(to))
@@ -58,26 +73,37 @@ drop_unused_links <- function(to_dat, from_dat) {
   to_dat[to_links %in% from_links, ]
 }
 
+#' Make a recoding call from linked codings
+#'
+#' Rhis creates a function that accepts a vector and recodes it from the
+#' information provided in a `linked_coding_df`
+#'
+#' @param linked_codings A `linked_coding_df`
+#' @param from A character or integer that selects the correct original coding
+#' @param to_suffix The suffix used to signify which columns refer to values to
+#'   which the vector will be recoded
+#' @param ... Any other parameters passed onto the recoding function selector
+#'
 #' @export
-make_recode_query <- function(linked_codings, wave, to_suffix = "to", ...) {
+make_recode_query <- function(linked_codings, from, to_suffix = "to", ...) {
   stopifnot(inherits(linked_codings, "linked_coding_df"))
 
   suffixed_columns <- c("label", "value")
-  wave_column_patterns <- paste0(
-    paste0(suffixed_columns, "_", wave), 
+  from_column_patterns <- paste0(
+    paste0(suffixed_columns, "_", from),
     collapse = "|"
   )
 
   to_column_patterns <- paste0(
-    paste0(suffixed_columns, "_", to_suffix), 
+    paste0(suffixed_columns, "_", to_suffix),
     collapse = "|"
   )
 
-  wave_columns <- grep(wave_column_patterns, names(linked_codings), value = TRUE)
+  from_columns <- grep(from_column_patterns, names(linked_codings), value = TRUE)
   to_columns <- grep(to_column_patterns, names(linked_codings), value = TRUE)
 
-  if (length(wave_columns) < 1) {
-    rc_err("Wave '{wave}' not found in linked coding data.frame.")
+  if (length(from_columns) < 1) {
+    rc_err("Origin '{from}' not found in linked coding data.frame.")
   }
 
   if (length(to_columns) < 1) {
@@ -88,13 +114,13 @@ make_recode_query <- function(linked_codings, wave, to_suffix = "to", ...) {
     ))
   }
 
-  subset <- linked_codings[, c("link", to_columns, wave_columns)]
+  subset <- linked_codings[, c("link", to_columns, from_columns)]
 
   # If wave label is NA, that value was not included in that wave. Drop.
-  subset <- subset[!is.na(subset[[paste0("label_", wave)]]), ]
+  subset <- subset[!is.na(subset[[paste0("label_", from)]]), ]
 
-  wave_value <- paste0("value_", wave)
+  from_value <- paste0("value_", from)
   to_value <- paste0("value_", to_suffix)
 
-  recode_function(subset[[wave_value]], subset[[to_value]], ...)
+  recode_function(subset[[from_value]], subset[[to_value]], ...)
 }

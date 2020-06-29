@@ -23,6 +23,10 @@ ui_value <- function(x) {
   paste0("'", x, "'")
 }
 
+cat_line <- function(x, .envir = parent.frame()) {
+  cat(glue(x, .envir = .envir), "\n", sep = "")
+}
+
 rc_err <- function(x, .envir = parent.frame()) {
   msg <- glue(glue_collapse(x), .envir = .envir)
 

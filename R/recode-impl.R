@@ -1,8 +1,7 @@
-#' @export
-recode_function <- function(wave_vec, 
-                            to_vec, 
-                            ..., 
-                            .engine = names(default_engines), 
+recode_function <- function(wave_vec,
+                            to_vec,
+                            ...,
+                            .engine = names(default_engines),
                             .engines = default_engines) {
   rc_assert(length(wave_vec) == length(to_vec))
   rc_assert(length(wave_vec) > 0)
