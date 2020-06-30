@@ -57,7 +57,11 @@ coding_list_to_df <- function(coding_list) {
     1:length(coding_list)
   }
 
-  mapped <- Map(as.data.frame, coding_list, suffixes)
+  mapped <- Map(
+    function(.x, .y) as.data.frame(.x, suffix = .y),
+    coding_list,
+    suffixes
+  )
 
   if (length(mapped) > 1) {
     Reduce(function(x, y) merge(x, y, by = "link", all = TRUE), mapped)
