@@ -27,13 +27,13 @@ link_codings <- function(to, from, to_suffix = "to", drop_unused = TRUE) {
     }
   }
 
-  from_dat <- if (!is.coding(from)) {
-    coding_list_to_df(from)
+  if (!is.coding(from)) {
+    from_dat <- coding_list_to_df(from)
   } else {
-    as.data.frame(from, 1)
+    from_dat <- as.data.frame(from, suffix = 1)
   }
 
-  to_dat <- as.data.frame(to, to_suffix)
+  to_dat <- as.data.frame(to, suffix = to_suffix)
 
   if (nrow(to_dat) < nrow(from_dat)) {
     rc_err("Not all cases covered while linking codings.")

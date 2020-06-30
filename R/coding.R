@@ -58,7 +58,7 @@ code <- function(label,
 
 #' @export
 print.code <- function(x, ...) {
-  cat("<Code>\n")
+  cat_line("<Code>")
   print(glue("label: {ui_value(x$label)}"))
   print(glue("value: {x$value}"))
 
@@ -270,7 +270,7 @@ print.coding <- function(x, ...) {
     return(invisible())
   }
 
-  if (!is.null(attr(x, "label"))) {
+  if (!is.null(coding_label(x))) {
     cat_line("<Coding: '{coding_label(coding)}'>")
   } else {
     cat_line("<Coding>")

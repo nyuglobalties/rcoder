@@ -2,9 +2,9 @@ context("linking")
 
 test_that("from only accepts a coding or list of codings", {
   coding_1 <- coding(
-    code("Yes", 1), 
-    code("No", 0), 
-    code("Not present", -99), 
+    code("Yes", 1),
+    code("No", 0),
+    code("Not present", -99),
     code("Refused", -88),
     code("Don't know", -77)
   )
@@ -19,8 +19,8 @@ test_that("from only accepts a coding or list of codings", {
     code("Yes", 1),
     code("No", 0),
     code(
-      "Missing", 
-      NA, 
+      "Missing",
+      NA,
       links_from = c(
         "Not present",
         "Refused",
@@ -42,5 +42,8 @@ test_that("from only accepts a coding or list of codings", {
     "Yes",      "Yes",          1,            "Yes",         "Yes",         1,           "Yes"
   )
 
-  expect_true(setequal(link_codings(coding_master, coding_1), test_tbl))
+  linked_c1 <- link_codings(coding_master, coding_1)
+
+  expect_true(setequal(names(test_tbl), names(linked_c1)))
+  expect_true(setequal(linked_c1, test_tbl))
 })

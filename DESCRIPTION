@@ -1,7 +1,7 @@
 Package: rcoder
 Type: Package
 Title: Lightweight data structure for recoding categorical data without factors
-Version: 0.0.1
+Version: 0.0.1.9000
 Authors@R: 
     c(person(
             given = "Patrick", 
