@@ -71,6 +71,31 @@ coding(
 #> 9 Absent      Absent        -77 Absent
 ```
 
+`coding()` objects are designed to be an intermediate representation of
+categorical data so that they can be converted into different
+representations on the fly, e.g. ODK XLSForm choices and STATA/SPSS
+columns via [`haven`](https://haven.tidyverse.org/).
+
+``` r
+coding(
+  code("Never", 1),
+  code("Rarely", 2),
+  code("Sometimes", 3),
+  code("Frequently", 4),
+  code("Always", 5),
+  .label = "frequency"
+) %>% 
+  coding_to_odk()
+#> # A tibble: 5 x 3
+#>   list_name  name label     
+#>   <chr>     <dbl> <chr>     
+#> 1 frequency     1 Never     
+#> 2 frequency     2 Rarely    
+#> 3 frequency     3 Sometimes 
+#> 4 frequency     4 Frequently
+#> 5 frequency     5 Always
+```
+
 To facilitate recoding, `coding()` objects link to one another through
 the `code()` labels. If multiple values are collapsed into one, use the
 `links_from` parameter to identify which values are combined into one.
@@ -117,7 +142,7 @@ new_coding %>%
 #> function (x) 
 #> dplyr::case_when(x == -77L ~ NA_integer_, x == 0L ~ 0L, x == 
 #>     -99L ~ NA_integer_, x == -88L ~ NA_integer_, x == 1L ~ 1L)
-#> <environment: 0x7fdec9311eb0>
+#> <environment: 0x7f8d7fede9c0>
 ```
 
 ## Installation

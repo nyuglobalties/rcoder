@@ -55,6 +55,20 @@ coding(
 )
 ```
 
+`coding()` objects are designed to be an intermediate representation of categorical data so that they can be converted into different representations on the fly, e.g. ODK XLSForm choices and STATA/SPSS columns via [`haven`](https://haven.tidyverse.org/).
+
+```{r}
+coding(
+  code("Never", 1),
+  code("Rarely", 2),
+  code("Sometimes", 3),
+  code("Frequently", 4),
+  code("Always", 5),
+  .label = "frequency"
+) %>% 
+  coding_to_odk()
+```
+
 To facilitate recoding, `coding()` objects link to one another through the `code()` labels. If multiple values are collapsed into one, use the `links_from` parameter to identify which values are combined into one.
 
 ```{r}
