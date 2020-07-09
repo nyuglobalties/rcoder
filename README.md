@@ -12,6 +12,114 @@ status](https://github.com/Global-TIES-for-Children/rcoder/workflows/R-CMD-check
 rcoder outlines a lightweight data structure that captures categorical
 codings and easily converts them to other implementations.
 
+## Usage
+
+rcoder’s main functions are `coding()` and `code()`. `code()` maps a
+character-valued key to some value to represent a categorical level.
+
+``` r
+library(rcoder)
+library(magrittr)
+
+code("Yes", 1)
+#> <Code>
+#> label: 'Yes'
+#> value: 1
+```
+
+`code()` objects can hold an arbitrary amount of metadata. Useful pieces
+of information to know are descriptions of what levels represent (in
+case the label doesn’t have enough information) and whether or not the
+value represents a missing value.
+
+``` r
+code("No response", -99, description = "Surveyed individual ignored question when asked", missing = TRUE)
+#> <Code>
+#> label: 'No response'
+#> value: -99
+#> description: 'Surveyed individual ignored question when asked'
+#> Represents a missing value
+```
+
+`coding()` is a collection of `code()` objects that represents the full
+set of values for a categorical variable.
+
+``` r
+coding(
+  code("Don't know", 0, missing = TRUE),
+  code("Never", 1),
+  code("Rarely", 2),
+  code("Sometimes", 3),
+  code("Frequently", 4),
+  code("Always", 5),
+  code("No response", -99, missing = TRUE),
+  code("Refused", -88, missing = TRUE),
+  code("Absent", -77, missing = TRUE)
+)
+#> <Coding>
+#> # A tibble: 9 x 4
+#>   link        label       value description
+#>   <chr>       <chr>       <dbl> <chr>      
+#> 1 Don't know  Don't know      0 Don't know 
+#> 2 Never       Never           1 Never      
+#> 3 Rarely      Rarely          2 Rarely     
+#> 4 Sometimes   Sometimes       3 Sometimes  
+#> 5 Frequently  Frequently      4 Frequently 
+#> 6 Always      Always          5 Always     
+#> 7 No response No response   -99 No response
+#> 8 Refused     Refused       -88 Refused    
+#> 9 Absent      Absent        -77 Absent
+```
+
+To facilitate recoding, `coding()` objects link to one another through
+the `code()` labels. If multiple values are collapsed into one, use the
+`links_from` parameter to identify which values are combined into one.
+
+``` r
+original_coding <- coding(
+  code("No", 0L),
+  code("Yes", 1L),
+  code("No response", -99L, missing = TRUE),
+  code("Refused", -88L, missing = TRUE),
+  code("Absent", -77L, missing = TRUE)
+)
+
+new_coding <- coding(
+  code("No", 0L),
+  code("Yes", 1L),
+  code("Missing", NA, links_from = c("No response", "Refused", "Absent"))
+)
+
+new_coding %>% 
+  link_codings(original_coding)
+#>          link label_to value_to description_to     label_1 value_1
+#> 1      Absent  Missing       NA        Missing      Absent     -77
+#> 2          No       No        0             No          No       0
+#> 3 No response  Missing       NA        Missing No response     -99
+#> 4     Refused  Missing       NA        Missing     Refused     -88
+#> 5         Yes      Yes        1            Yes         Yes       1
+#>   description_1
+#> 1        Absent
+#> 2            No
+#> 3   No response
+#> 4       Refused
+#> 5           Yes
+```
+
+These linked codings can be converted into a function that accepts a
+vector and returns a recoded vector. The `1` refers to the original
+coding.
+
+``` r
+new_coding %>% 
+  link_codings(original_coding) %>% 
+  make_recode_query(1)
+#> function (x) 
+#> dplyr::case_when(x == -77L ~ NA_integer_, x == 0L ~ 0L, x == 
+#>     -99L ~ NA_integer_, x == -88L ~ NA_integer_, x == 1L ~ 1L)
+#> <environment: 0x7fdec9311eb0>
+```
+
 ## Installation
 
 rcoder is not yet on CRAN, so you will need to install from this

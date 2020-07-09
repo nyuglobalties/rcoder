@@ -25,5 +25,6 @@ Suggests:
     testthat (>= 2.1.0),
     tibble,
     dplyr,
-    tidyfast
+    tidyfast,
+    magrittr
 RoxygenNote: 7.1.0

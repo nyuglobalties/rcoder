@@ -22,6 +22,68 @@ knitr::opts_chunk$set(
 rcoder outlines a lightweight data structure that captures categorical codings
 and easily converts them to other implementations.
 
+## Usage
+
+rcoder's main functions are `coding()` and `code()`. `code()` maps a character-valued key to some value to represent a categorical level.
+
+```{r}
+library(rcoder)
+library(magrittr)
+
+code("Yes", 1)
+```
+
+`code()` objects can hold an arbitrary amount of metadata. Useful pieces of information to know are descriptions of what levels represent (in case the label doesn't have enough information) and whether or not the value represents a missing value.
+
+```{r}
+code("No response", -99, description = "Surveyed individual ignored question when asked", missing = TRUE)
+```
+
+`coding()` is a collection of `code()` objects that represents the full set of values for a categorical variable.
+
+```{r}
+coding(
+  code("Don't know", 0, missing = TRUE),
+  code("Never", 1),
+  code("Rarely", 2),
+  code("Sometimes", 3),
+  code("Frequently", 4),
+  code("Always", 5),
+  code("No response", -99, missing = TRUE),
+  code("Refused", -88, missing = TRUE),
+  code("Absent", -77, missing = TRUE)
+)
+```
+
+To facilitate recoding, `coding()` objects link to one another through the `code()` labels. If multiple values are collapsed into one, use the `links_from` parameter to identify which values are combined into one.
+
+```{r}
+original_coding <- coding(
+  code("No", 0L),
+  code("Yes", 1L),
+  code("No response", -99L, missing = TRUE),
+  code("Refused", -88L, missing = TRUE),
+  code("Absent", -77L, missing = TRUE)
+)
+
+new_coding <- coding(
+  code("No", 0L),
+  code("Yes", 1L),
+  code("Missing", NA, links_from = c("No response", "Refused", "Absent"))
+)
+
+new_coding %>% 
+  link_codings(original_coding)
+```
+
+These linked codings can be converted into a function that accepts a vector and returns a recoded vector. The `1` refers to the original coding.
+
+```{r}
+new_coding %>% 
+  link_codings(original_coding) %>% 
+  make_recode_query(1)
+```
+
 ## Installation
 
 rcoder is not yet on CRAN, so you will need to install from this repository:
