@@ -21,7 +21,7 @@ recode_function_dplyr <- function(from, to) {
   exprs <- unname(Map(f, from, to))
   body <- rlang::call2("case_when", !!!exprs, .ns = "dplyr")
 
-  eval(bquote(function(x) .(body)))
+  rlang::new_function(alist(x=), body)
 }
 
 recode_function_tidyfast <- function(from, to) {
