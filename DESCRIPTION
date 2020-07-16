@@ -23,7 +23,7 @@ Imports:
     glue
 Suggests: 
     testthat (>= 2.1.0),
-    tibble,
+    tibble (>= 3.0.3),
     dplyr,
     tidyfast,
     magrittr
