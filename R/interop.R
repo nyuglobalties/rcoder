@@ -27,6 +27,10 @@ coding_to_ddi <- function(coding) {
 coding_to_odk <- function(coding) {
   rc_assert(is.coding(coding))
 
+  if (is_empty_coding(coding)) {
+    return(NULL)
+  }
+
   if (is.null(coding_label(coding))) {
     rc_err(c(
       "Coding label must be specified for ODK XLSForm choices.\n",
@@ -63,6 +67,10 @@ coding_to_odk <- function(coding) {
 #' @export
 coding_to_haven_labels <- function(coding) {
   rc_assert(is.coding(coding))
+
+  if (is_empty_coding(coding)) {
+    return(NULL)
+  }
 
   contents <- coding_contents(coding)
   h_labels <- contents$values
