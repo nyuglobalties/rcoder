@@ -3,6 +3,7 @@
 S3method(as.data.frame,coding)
 S3method(print,code)
 S3method(print,coding)
+export(as_coding_list)
 export(code)
 export(coding)
 export(coding_to_haven_labels)
