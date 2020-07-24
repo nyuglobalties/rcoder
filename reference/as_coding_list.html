@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • rcoder</title>
+<title>Evaluate a collection of codings from a character vector — as_coding_list • rcoder</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Evaluate a collection of codings from a character vector — as_coding_list" />
+<meta property="og:description" content="Evaluate a collection of codings from a character vector" />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -100,102 +101,48 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Evaluate a collection of codings from a character vector</h1>
+    
+    <div class="hidden name"><code>as_coding_list.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Evaluate a collection of codings from a character vector</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>as_coding_list</span>(<span class='no'>x</span>)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="as_coding_list.html">as_coding_list()</a></code> </p>
-        </td>
-        <td><p>Evaluate a collection of codings from a character vector</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="code.html">code()</a></code> </p>
-        </td>
-        <td><p>Encode a label to a value with other metadata</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="coding.html">coding()</a></code> <code><a href="coding.html">empty_coding()</a></code> </p>
-        </td>
-        <td><p>Catalog the categorical data representation in a vector</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="coding_to_ddi.html">coding_to_ddi()</a></code> </p>
-        </td>
-        <td><p>Convert a coding object to an rddi value map</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="coding_to_haven_labels.html">coding_to_haven_labels()</a></code> </p>
-        </td>
-        <td><p>Convert coding to `haven`-compatible labels</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="coding_to_odk.html">coding_to_odk()</a></code> </p>
-        </td>
-        <td><p>Convert a coding object to ODK XLSForm choices</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="eval_coding.html">eval_coding()</a></code> </p>
-        </td>
-        <td><p>Evaluates a coding expression in a safe environment</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is_empty_coding.html">is_empty_coding()</a></code> </p>
-        </td>
-        <td><p>Is an object the empty coding?</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="link_codings.html">link_codings()</a></code> </p>
-        </td>
-        <td><p>Link a coding from others for recoding</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make_recode_query.html">make_recode_query()</a></code> </p>
-        </td>
-        <td><p>Make a recoding call from linked codings</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="matches_coding.html">matches_coding()</a></code> <code><a href="matches_coding.html">verify_matches_coding()</a></code> </p>
-        </td>
-        <td><p>Checks if vector's content adheres to a coding</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A character vector</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A list of codings</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>char_vec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"coding(code('Yes', 1), code('No', 0))"</span>, <span class='st'>""</span>)
+<span class='fu'>as_coding_list</span>(<span class='no'>char_vec</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; &lt;Coding&gt;
+#&gt; <span style='color: #555555;'># A tibble: 2 x 4</span><span>
+#&gt;   link  label value description
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
+#&gt; </span><span style='color: #555555;'>1</span><span> Yes   Yes       1 Yes        
+#&gt; </span><span style='color: #555555;'>2</span><span> No    No        0 No         
+#&gt; 
+#&gt; [[2]]
+#&gt; &lt;Empty Coding&gt;
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "coding_lst" "list"      </div></span></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
