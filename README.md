@@ -3,14 +3,14 @@
 
 # rcoder
 
+> rcoder outlines a lightweight data structure that captures categorical
+> codings and easily converts them to other implementations.
+
 <!-- badges: start -->
 
 [![R build
-status](https://github.com/Global-TIES-for-Children/rcoder/workflows/R-CMD-check/badge.svg)](https://github.com/Global-TIES-for-Children/rcoder/actions)
+status](https://github.com/nyuglobalties/rcoder/workflows/R-CMD-check/badge.svg)](https://github.com/nyuglobalties/rcoder/actions)
 <!-- badges: end -->
-
-rcoder outlines a lightweight data structure that captures categorical
-codings and easily converts them to other implementations.
 
 ## Usage
 
@@ -142,7 +142,7 @@ new_coding %>%
 #> function (x) 
 #> dplyr::case_when(x == -77L ~ NA_integer_, x == 0L ~ 0L, x == 
 #>     -99L ~ NA_integer_, x == -88L ~ NA_integer_, x == 1L ~ 1L)
-#> <environment: 0x7f8d7fede9c0>
+#> <environment: 0x7fdaab2e3f68>
 ```
 
 ## Installation
@@ -152,5 +152,5 @@ repository:
 
 ``` r
 install.packages("remotes")
-remotes::install_github("Global-TIES-for-Children/rcoder")
+remotes::install_github("nyuglobalties/rcoder")
 ```
