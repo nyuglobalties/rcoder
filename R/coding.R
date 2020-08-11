@@ -298,7 +298,7 @@ print.coding <- function(x, ...) {
 eval_coding <- function(expr) {
   rc_assert(rlang::is_expression(expr))
 
-  safe_env <- rlang::new_environment(parent = emptyenv())
+  safe_env <- rlang::new_environment(parent = parent.frame())
   rlang::env_bind(safe_env, code = code, coding = coding)
 
   rlang::eval_bare(expr, env = safe_env)
