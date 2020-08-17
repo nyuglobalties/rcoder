@@ -1,16 +1,3 @@
-#' Convert a coding object to an rddi value map
-#'
-#' Value maps in DDIwR are two elements ('values' and 'missing') in a dataDscr entry list.
-#' This function will export 'values' and (if applicable) 'missing' as their own list.
-#' To incorporate these objects into a larger DDIwR codebook, the output of this function
-#' must be concatenated to the dataDscr entry.
-#'
-#' @param coding A coding object
-coding_to_ddi <- function(coding) {
-  rc_assert(is.coding(coding))
-
-}
-
 #' Convert a coding object to ODK XLSForm choices
 #'
 #' ODK XLSForms link the categorical codings to a variable type name in the
