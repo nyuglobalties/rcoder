@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">rcoder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@
 <p>rcoder outlines a lightweight data structure that captures categorical codings and easily converts them to other implementations.</p>
 </blockquote>
 <!-- badges: start -->
-<p><a href="https://github.com/nyuglobalties/rcoder/actions"><img src="https://github.com/nyuglobalties/rcoder/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <!-- badges: end --></p>
+<p><a href="https://github.com/nyuglobalties/rcoder/actions"><img src="https://github.com/nyuglobalties/rcoder/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a> <!-- badges: end --></p>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
@@ -99,18 +99,18 @@
   <span class="fu"><a href="reference/code.html">code</a></span>(<span class="st">"Absent"</span>, -<span class="fl">77</span>, <span class="kw">missing</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 )
 <span class="co">#&gt; &lt;Coding&gt;</span>
-<span class="co">#&gt; # A tibble: 9 x 4</span>
-<span class="co">#&gt;   link        label       value description</span>
-<span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;      </span>
-<span class="co">#&gt; 1 Don't know  Don't know      0 Don't know </span>
-<span class="co">#&gt; 2 Never       Never           1 Never      </span>
-<span class="co">#&gt; 3 Rarely      Rarely          2 Rarely     </span>
-<span class="co">#&gt; 4 Sometimes   Sometimes       3 Sometimes  </span>
-<span class="co">#&gt; 5 Frequently  Frequently      4 Frequently </span>
-<span class="co">#&gt; 6 Always      Always          5 Always     </span>
-<span class="co">#&gt; 7 No response No response   -99 No response</span>
-<span class="co">#&gt; 8 Refused     Refused       -88 Refused    </span>
-<span class="co">#&gt; 9 Absent      Absent        -77 Absent</span></pre></div>
+<span class="co">#&gt; # A tibble: 9 x 5</span>
+<span class="co">#&gt;   link        label       value description missing</span>
+<span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;       &lt;lgl&gt;  </span>
+<span class="co">#&gt; 1 Don't know  Don't know      0 Don't know  TRUE   </span>
+<span class="co">#&gt; 2 Never       Never           1 Never       FALSE  </span>
+<span class="co">#&gt; 3 Rarely      Rarely          2 Rarely      FALSE  </span>
+<span class="co">#&gt; 4 Sometimes   Sometimes       3 Sometimes   FALSE  </span>
+<span class="co">#&gt; 5 Frequently  Frequently      4 Frequently  FALSE  </span>
+<span class="co">#&gt; 6 Always      Always          5 Always      FALSE  </span>
+<span class="co">#&gt; 7 No response No response   -99 No response TRUE   </span>
+<span class="co">#&gt; 8 Refused     Refused       -88 Refused     TRUE   </span>
+<span class="co">#&gt; 9 Absent      Absent        -77 Absent      TRUE</span></pre></div>
 <p><code><a href="reference/coding.html">coding()</a></code> objects are designed to be an intermediate representation of categorical data so that they can be converted into different representations on the fly, e.g. ODK XLSForm choices and STATA/SPSS columns via <a href="https://haven.tidyverse.org/"><code>haven</code></a>.</p>
 <div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="reference/coding.html">coding</a></span>(
   <span class="fu"><a href="reference/code.html">code</a></span>(<span class="st">"Never"</span>, <span class="fl">1</span>),
@@ -146,26 +146,20 @@
 
 <span class="no">new_coding</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/link_codings.html">link_codings</a></span>(<span class="no">original_coding</span>)
-<span class="co">#&gt;          link label_to value_to description_to     label_1 value_1</span>
-<span class="co">#&gt; 1      Absent  Missing       NA        Missing      Absent     -77</span>
-<span class="co">#&gt; 2          No       No        0             No          No       0</span>
-<span class="co">#&gt; 3 No response  Missing       NA        Missing No response     -99</span>
-<span class="co">#&gt; 4     Refused  Missing       NA        Missing     Refused     -88</span>
-<span class="co">#&gt; 5         Yes      Yes        1            Yes         Yes       1</span>
-<span class="co">#&gt;   description_1</span>
-<span class="co">#&gt; 1        Absent</span>
-<span class="co">#&gt; 2            No</span>
-<span class="co">#&gt; 3   No response</span>
-<span class="co">#&gt; 4       Refused</span>
-<span class="co">#&gt; 5           Yes</span></pre></div>
-<p>These linked codings can be converted into a function that accepts a vector and returns a recoded vector. The <code>1</code> refers to the original coding.</p>
+<span class="co">#&gt;          link label_to value_to     label_1 value_1</span>
+<span class="co">#&gt; 1      Absent  Missing       NA      Absent     -77</span>
+<span class="co">#&gt; 2          No       No        0          No       0</span>
+<span class="co">#&gt; 3 No response  Missing       NA No response     -99</span>
+<span class="co">#&gt; 4     Refused  Missing       NA     Refused     -88</span>
+<span class="co">#&gt; 5         Yes      Yes        1         Yes       1</span></pre></div>
+<p>These linked codings can be converted into a function that accepts a vector and returns a recoded vector.</p>
 <div class="sourceCode" id="cb6"><pre class="r"><span class="no">new_coding</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/link_codings.html">link_codings</a></span>(<span class="no">original_coding</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="reference/make_recode_query.html">make_recode_query</a></span>(<span class="fl">1</span>)
+  <span class="fu"><a href="reference/make_recode_query.html">make_recode_query</a></span>()
 <span class="co">#&gt; function (x) </span>
 <span class="co">#&gt; dplyr::case_when(x == -77L ~ NA_integer_, x == 0L ~ 0L, x == </span>
 <span class="co">#&gt;     -99L ~ NA_integer_, x == -88L ~ NA_integer_, x == 1L ~ 1L)</span>
-<span class="co">#&gt; &lt;environment: 0x7fdaab2e3f68&gt;</span></pre></div>
+<span class="co">#&gt; &lt;environment: 0x7fa9e6633478&gt;</span></pre></div>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">

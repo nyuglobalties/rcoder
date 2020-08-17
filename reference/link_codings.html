@@ -74,7 +74,7 @@ are linked, to be used in `make_recode_query()`." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcoder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -116,7 +116,7 @@ codings to another. This creates a `data.frame` that outlines how the codings
 are linked, to be used in `make_recode_query()`.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>link_codings</span>(<span class='no'>to</span>, <span class='no'>from</span>, <span class='kw'>to_suffix</span> <span class='kw'>=</span> <span class='st'>"to"</span>, <span class='kw'>drop_unused</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>link_codings</span>(<span class='no'>to</span>, <span class='no'>...</span>, <span class='kw'>.to_suffix</span> <span class='kw'>=</span> <span class='st'>"to"</span>, <span class='kw'>.drop_unused</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -126,18 +126,18 @@ are linked, to be used in `make_recode_query()`.</p>
       <td><p>A coding to be linked to</p></td>
     </tr>
     <tr>
-      <th>from</th>
-      <td><p>A coding or list of codings to be linked from</p></td>
+      <th>...</th>
+      <td><p>Codings to be linked from</p></td>
     </tr>
     <tr>
-      <th>to_suffix</th>
+      <th>.to_suffix</th>
       <td><p>A suffix signifying which columns in the output `data.frame`
 came from `to`</p></td>
     </tr>
     <tr>
-      <th>drop_unused</th>
+      <th>.drop_unused</th>
       <td><p>Logical flag to drop any codes in `to` that have no
-counterparts in `from`</p></td>
+counterparts in `...`</p></td>
     </tr>
     </table>
 

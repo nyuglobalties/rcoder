@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Make a recoding call from linked codings — make_recode_query" />
-<meta property="og:description" content="Rhis creates a function that accepts a vector and recodes it from the
+<meta property="og:description" content="This creates a function that accepts a vector and recodes it from the
 information provided in a `linked_coding_df`" />
 
 
@@ -73,7 +73,7 @@ information provided in a `linked_coding_df`" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcoder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -110,11 +110,11 @@ information provided in a `linked_coding_df`" />
     </div>
 
     <div class="ref-description">
-    <p>Rhis creates a function that accepts a vector and recodes it from the
+    <p>This creates a function that accepts a vector and recodes it from the
 information provided in a `linked_coding_df`</p>
     </div>
 
-    <pre class="usage"><span class='fu'>make_recode_query</span>(<span class='no'>linked_codings</span>, <span class='no'>from</span>, <span class='kw'>to_suffix</span> <span class='kw'>=</span> <span class='st'>"to"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>make_recode_query</span>(<span class='no'>linked_codings</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>to_suffix</span> <span class='kw'>=</span> <span class='st'>"to"</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -125,7 +125,8 @@ information provided in a `linked_coding_df`</p>
     </tr>
     <tr>
       <th>from</th>
-      <td><p>A character or integer that selects the correct original coding</p></td>
+      <td><p>A character or integer that selects the correct original coding.
+Defaults to 1, the first linked coding.</p></td>
     </tr>
     <tr>
       <th>to_suffix</th>

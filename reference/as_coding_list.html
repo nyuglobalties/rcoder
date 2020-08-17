@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcoder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -131,11 +131,11 @@
     <pre class="examples"><div class='input'><span class='no'>char_vec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"coding(code('Yes', 1), code('No', 0))"</span>, <span class='st'>""</span>)
 <span class='fu'>as_coding_list</span>(<span class='no'>char_vec</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; &lt;Coding&gt;
-#&gt; <span style='color: #555555;'># A tibble: 2 x 4</span><span>
-#&gt;   link  label value description
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
-#&gt; </span><span style='color: #555555;'>1</span><span> Yes   Yes       1 Yes        
-#&gt; </span><span style='color: #555555;'>2</span><span> No    No        0 No         
+#&gt; <span style='color: #555555;'># A tibble: 2 x 5</span><span>
+#&gt;   link  label value description missing
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>  
+#&gt; </span><span style='color: #555555;'>1</span><span> Yes   Yes       1 Yes         FALSE  
+#&gt; </span><span style='color: #555555;'>2</span><span> No    No        0 No          FALSE  
 #&gt; 
 #&gt; [[2]]
 #&gt; &lt;Empty Coding&gt;
