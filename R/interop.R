@@ -28,20 +28,11 @@ coding_to_odk <- function(coding) {
 
   contents <- coding_contents(coding)
 
-  if (requireNamespace("tibble", quietly = FALSE)) {
-    tibble::tibble(
-      list_name = coding_label(coding),
-      name = contents$values,
-      label = contents$labels
-    )
-  } else {
-    data.frame(
-      list_name = coding_label(coding),
-      name = contents$values,
-      label = contents$labels,
-      stringsAsFactors = FALSE
-    )
-  }
+  dplyr::tibble(
+    list_name = coding_label(coding),
+    name = unique(contents$value),
+    label = unique(contents$label)
+  )
 }
 
 #' Convert coding to `haven`-compatible labels
@@ -60,8 +51,8 @@ coding_to_haven_labels <- function(coding) {
   }
 
   contents <- coding_contents(coding)
-  h_labels <- contents$values
-  names(h_labels) <- contents$labels
+  h_labels <- unique(contents$value)
+  names(h_labels) <- unique(contents$label)
 
   h_labels
 }
