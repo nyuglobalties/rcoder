@@ -5,25 +5,31 @@
 #' are linked, to be used in `make_recode_query()`.
 #'
 #' @param to A coding to be linked to
-#' @param from A coding or list of codings to be linked from
-#' @param to_suffix A suffix signifying which columns in the output `data.frame`
+#' @param ... Codings to be linked from
+#' @param .to_suffix A suffix signifying which columns in the output `data.frame`
 #'   came from `to`
-#' @param drop_unused Logical flag to drop any codes in `to` that have no
-#'   counterparts in `from`
+#' @param .drop_unused Logical flag to drop any codes in `to` that have no
+#'   counterparts in `...`
 #' @return A `linked_coding_df` with all necessary information for a recoding
 #'   query
 #'
 #' @export
-link_codings <- function(to, from, to_suffix = "to", drop_unused = TRUE) {
+link_codings <- function(to, ..., .to_suffix = "to", .drop_unused = TRUE) {
   rc_assert(is.coding(to))
+
+  from <- rlang::dots_list(...)
+
+  if (length(from) == 1) {
+    from <- from[[1]]
+  }
 
   if (!is.coding(from)) {
     if (!is.list(from)) {
-      rc_err("`from` must be a coding or list of codings.")
+      rc_err("`...` must be a coding or codings.")
     }
 
     if (!all(vlapply(from, is.coding))) {
-      rc_err("Not all of `from` is a coding object.")
+      rc_err("Not all of `...` is a coding object.")
     }
   }
 
@@ -33,15 +39,20 @@ link_codings <- function(to, from, to_suffix = "to", drop_unused = TRUE) {
     from_dat <- as.data.frame(from, suffix = 1)
   }
 
-  to_dat <- as.data.frame(to, suffix = to_suffix)
+  to_dat <- as.data.frame(to, suffix = .to_suffix)
 
   if (nrow(to_dat) < nrow(from_dat)) {
     rc_err("Not all cases covered while linking codings.")
   }
 
-  if (isTRUE(drop_unused)) {
+  if (isTRUE(.drop_unused)) {
     to_dat <- drop_unused_links(to_dat, from_dat)
   }
+
+  # Only include link, value, and label
+  filter_pattern <- paste0(paste0("^", c("link", "value", "label")), collapse = "|")
+  to_dat <- to_dat[, grepl(filter_pattern, names(to_dat))]
+  from_dat <- from_dat[, grepl(filter_pattern, names(from_dat))]
 
   dat <- merge(to_dat, from_dat, by = "link", all.x = TRUE)
   class(dat) <- c(class(dat), "linked_coding_df")
@@ -79,17 +90,18 @@ drop_unused_links <- function(to_dat, from_dat) {
 
 #' Make a recoding call from linked codings
 #'
-#' Rhis creates a function that accepts a vector and recodes it from the
+#' This creates a function that accepts a vector and recodes it from the
 #' information provided in a `linked_coding_df`
 #'
 #' @param linked_codings A `linked_coding_df`
-#' @param from A character or integer that selects the correct original coding
+#' @param from A character or integer that selects the correct original coding.
+#'             Defaults to 1, the first linked coding.
 #' @param to_suffix The suffix used to signify which columns refer to values to
 #'   which the vector will be recoded
 #' @param ... Any other parameters passed onto the recoding function selector
 #'
 #' @export
-make_recode_query <- function(linked_codings, from, to_suffix = "to", ...) {
+make_recode_query <- function(linked_codings, from = 1, to_suffix = "to", ...) {
   stopifnot(inherits(linked_codings, "linked_coding_df"))
 
   suffixed_columns <- c("label", "value")

@@ -1,94 +1,3 @@
-#' Encode a label to a value with other metadata
-#'
-#' The most fundamental components of a `code` object are the `label` and
-#' `value` elements. A `code` object is essentially a key-value tuple that has
-#' some extra metadata.
-#'
-#' @param label A short label for a value in a vector
-#' @param value The raw value found in the respective vector
-#' @param description A longer-form label for the value, if extra context for
-#'   that label is needed
-#' @param links_from A reference to another `code` in another `coding` object
-#'   for recoding purposes.
-#' @param missing Whether this `code` represents a missing response
-#' @param ... Any extra metadata
-#'
-#' @export
-code <- function(label,
-                 value,
-                 description = label,
-                 links_from = label,
-                 missing = FALSE,
-                 ...) {
-  rc_assert(
-    is.character(label),
-    "label ({ui_value(label)}) has type {ui_value(typeof(label))} when it should be 'character'."
-  )
-
-  rc_assert(
-    is.character(description),
-    "description ({ui_value(description)}) has type {ui_value(typeof(description))} when it should be 'character'."
-  )
-
-  rc_assert(
-    is.character(links_from),
-    "links_from ({ui_value(links_from)}) has type {ui_value(typeof(links_from))} when it should be 'character'."
-  )
-
-  check_code_entry_length(value, "codes")
-  check_code_entry_length(label, "labels")
-  check_code_entry_length(description, "descriptions")
-
-  if (all(is.na(label))) {
-    rc_err("A code cannot have a missing label.")
-  }
-
-  structure(
-    list(
-      label = label,
-      value = value,
-      description = description,
-      links_from = links_from,
-      missing = missing,
-      ...
-    ),
-    class = "code"
-  )
-}
-
-#' @export
-print.code <- function(x, ...) {
-  cat_line("<Code>")
-  print(glue("label: {ui_value(x$label)}"))
-  print(glue("value: {x$value}"))
-
-  if (!identical(x$description, x$label)) {
-    print(glue("description: {ui_value(x$description)}"))
-  }
-
-  if (!identical(x$links_from, x$label)) {
-    print(glue("linking from: [{glue_collapse(ui_value(x$links_from), ', ')}]"))
-  }
-
-  if (isTRUE(x$missing)) {
-    print(glue("Represents a missing value"))
-  }
-
-  invisible()
-}
-
-check_code_entry_length <- function(x, type) {
-  if (length(x) > 1) {
-    rc_err(c(
-      "Cannot have multivalued {type}.\n",
-      "code() is specifically for the meaning of each value ",
-      "in a variable."
-    ))
-  }
-
-  invisible(x)
-}
-
 #' Catalog the categorical data representation in a vector
 #'
 #' A `coding` object holds a list of `code`s that map vector values to human
@@ -162,7 +71,7 @@ is_empty_coding <- function(x) {
 
 is.coding <- function(x) inherits(x, "coding")
 
-labels.coding <- function(x, ...) attr(x, "labels")
+labels.coding <- function(x, ...) attr(x, "labels", exact = TRUE)
 
 select_codes_if <- function(.coding, .p, ...) {
   rc_assert(is.coding(.coding) && is.function(.p))
@@ -216,20 +125,13 @@ coding_contents <- function(coding) {
     ))
   }
 
-  coding <- lapply(coding, function(x) {
-    x$label <- rep(x$label, length(x$links_from))
-    x$value <- rep(x$value, length(x$links_from))
-    x$description <- rep(x$description, length(x$links_from))
+  dfs <- lapply(coding, as.data.frame)
+  content <- dplyr::bind_rows(!!!dfs)
+  content[["link"]] <- content[["links_from"]]
+  content[["links_from"]] <- NULL
 
-    x
-  })
-
-  list(
-    links = unlist(lapply(coding, function(x) x$links_from)),
-    labels = unlist(lapply(coding, function(x) x$label)),
-    values = unlist(lapply(coding, function(x) x$value)),
-    descriptions = unlist(lapply(coding, function(x) x$description))
-  )
+  content <- content[, c("link", setdiff(names(content), "link"))]
+  content
 }
 
 coding_label <- function(coding) {
@@ -244,15 +146,7 @@ as.data.frame.coding <- function(
   suffix = NULL,
   ...
 ) {
-  contents <- coding_contents(x)
-
-  out <- data.frame(
-    link = contents$links,
-    label = contents$labels,
-    value = contents$values,
-    description = contents$descriptions,
-    stringsAsFactors = FALSE
-  )
+  out <- coding_contents(x)
 
   if (!is.null(suffix)) {
     stopifnot(is.character(suffix) || is_positive_integer(suffix))

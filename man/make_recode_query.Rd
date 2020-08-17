@@ -4,12 +4,13 @@
 \alias{make_recode_query}
 \title{Make a recoding call from linked codings}
 \usage{
-make_recode_query(linked_codings, from, to_suffix = "to", ...)
+make_recode_query(linked_codings, from = 1, to_suffix = "to", ...)
 }
 \arguments{
 \item{linked_codings}{A `linked_coding_df`}
 
-\item{from}{A character or integer that selects the correct original coding}
+\item{from}{A character or integer that selects the correct original coding.
+Defaults to 1, the first linked coding.}
 
 \item{to_suffix}{The suffix used to signify which columns refer to values to
 which the vector will be recoded}
@@ -17,6 +18,6 @@ which the vector will be recoded}
 \item{...}{Any other parameters passed onto the recoding function selector}
 }
 \description{
-Rhis creates a function that accepts a vector and recodes it from the
+This creates a function that accepts a vector and recodes it from the
 information provided in a `linked_coding_df`
 }
