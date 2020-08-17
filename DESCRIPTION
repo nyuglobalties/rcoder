@@ -21,7 +21,6 @@ LazyData: true
 Imports: 
     rlang,
     glue,
-    tibble (>= 3.0.3),
     dplyr
 Suggests: 
     testthat (>= 2.1.0),

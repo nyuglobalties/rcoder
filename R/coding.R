@@ -170,11 +170,7 @@ print.coding <- function(x, ...) {
     cat_line("<Coding>")
   }
 
-  if (requireNamespace("tibble", quietly = TRUE)) {
-    print(tibble::as_tibble(as.data.frame(x)))
-  } else {
-    print(as.data.frame(x))
-  }
+  print(dplyr::as_tibble(as.data.frame(x)))
 
   invisible()
 }
