@@ -4,7 +4,7 @@
 \name{rcoder-package}
 \alias{rcoder}
 \alias{rcoder-package}
-\title{rcoder: Lightweight data structure for recoding categorical data without factors}
+\title{rcoder: Lightweight Data Structure for Recoding Categorical Data without Factors}
 \description{
 A data structure and toolkit for documenting and recoding
     categorical data that can be shared in other statistical software.
