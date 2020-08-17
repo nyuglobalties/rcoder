@@ -10,6 +10,8 @@
 
 [![R build
 status](https://github.com/nyuglobalties/rcoder/workflows/R-CMD-check/badge.svg)](https://github.com/nyuglobalties/rcoder/actions)
+[![Lifecycle:
+maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 <!-- badges: end -->
 
 ## Usage
@@ -57,18 +59,18 @@ coding(
   code("Absent", -77, missing = TRUE)
 )
 #> <Coding>
-#> # A tibble: 9 x 4
-#>   link        label       value description
-#>   <chr>       <chr>       <dbl> <chr>      
-#> 1 Don't know  Don't know      0 Don't know 
-#> 2 Never       Never           1 Never      
-#> 3 Rarely      Rarely          2 Rarely     
-#> 4 Sometimes   Sometimes       3 Sometimes  
-#> 5 Frequently  Frequently      4 Frequently 
-#> 6 Always      Always          5 Always     
-#> 7 No response No response   -99 No response
-#> 8 Refused     Refused       -88 Refused    
-#> 9 Absent      Absent        -77 Absent
+#> # A tibble: 9 x 5
+#>   link        label       value description missing
+#>   <chr>       <chr>       <dbl> <chr>       <lgl>  
+#> 1 Don't know  Don't know      0 Don't know  TRUE   
+#> 2 Never       Never           1 Never       FALSE  
+#> 3 Rarely      Rarely          2 Rarely      FALSE  
+#> 4 Sometimes   Sometimes       3 Sometimes   FALSE  
+#> 5 Frequently  Frequently      4 Frequently  FALSE  
+#> 6 Always      Always          5 Always      FALSE  
+#> 7 No response No response   -99 No response TRUE   
+#> 8 Refused     Refused       -88 Refused     TRUE   
+#> 9 Absent      Absent        -77 Absent      TRUE
 ```
 
 `coding()` objects are designed to be an intermediate representation of
@@ -117,32 +119,25 @@ new_coding <- coding(
 
 new_coding %>% 
   link_codings(original_coding)
-#>          link label_to value_to description_to     label_1 value_1
-#> 1      Absent  Missing       NA        Missing      Absent     -77
-#> 2          No       No        0             No          No       0
-#> 3 No response  Missing       NA        Missing No response     -99
-#> 4     Refused  Missing       NA        Missing     Refused     -88
-#> 5         Yes      Yes        1            Yes         Yes       1
-#>   description_1
-#> 1        Absent
-#> 2            No
-#> 3   No response
-#> 4       Refused
-#> 5           Yes
+#>          link label_to value_to     label_1 value_1
+#> 1      Absent  Missing       NA      Absent     -77
+#> 2          No       No        0          No       0
+#> 3 No response  Missing       NA No response     -99
+#> 4     Refused  Missing       NA     Refused     -88
+#> 5         Yes      Yes        1         Yes       1
 ```
 
 These linked codings can be converted into a function that accepts a
-vector and returns a recoded vector. The `1` refers to the original
-coding.
+vector and returns a recoded vector.
 
 ``` r
 new_coding %>% 
   link_codings(original_coding) %>% 
-  make_recode_query(1)
+  make_recode_query()
 #> function (x) 
 #> dplyr::case_when(x == -77L ~ NA_integer_, x == 0L ~ 0L, x == 
 #>     -99L ~ NA_integer_, x == -88L ~ NA_integer_, x == 1L ~ 1L)
-#> <environment: 0x7fdaab2e3f68>
+#> <environment: 0x7fa9e6633478>
 ```
 
 ## Installation

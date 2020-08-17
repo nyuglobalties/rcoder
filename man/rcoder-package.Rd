@@ -14,7 +14,7 @@ A data structure and toolkit for documenting and recoding
 
 Other contributors:
 \itemize{
-  \item Global TIES for Children (https://research.steinhardt.nyu.edu/ihdsc/global-ties) [copyright holder]
+  \item Global TIES for Children (https://steinhardt.nyu.edu/ihdsc/global-ties) [copyright holder]
 }
 
 }
