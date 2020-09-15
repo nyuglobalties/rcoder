@@ -130,7 +130,7 @@ make_recode_query <- function(linked_codings, from = 1, to_suffix = "to", ...) {
     ))
   }
 
-  subset <- linked_codings[, c("link", to_columns, from_columns)]
+  subset <- unique(linked_codings[, c("link", to_columns, from_columns)])
 
   # If wave label is NA, that value was not included in that wave. Drop.
   subset <- subset[!is.na(subset[[paste0("label_", from)]]), ]
