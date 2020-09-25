@@ -34,9 +34,14 @@ recode_function_tidyfast <- function(from, to, guard = FALSE) {
 }
 
 new_recode_func <- function(body, from, from_guard) {
-  if (isTRUE(from_guard)) {
+  if (!identical(from_guard, FALSE)) {
     full_body <- bquote({
       all_from <- .(c(unique(from), NA))
+      guard_type <- .(from_guard)
+
+      if (isTRUE(guard_type)) {
+        guard_type <- "hard"
+      }
 
       if (!all(unique(x) %in% all_from)) {
         missing_cases <- setdiff(x, all_from)
@@ -45,12 +50,20 @@ new_recode_func <- function(body, from, from_guard) {
           missing_cases <- paste0("'", missing_cases, "'")
         }
 
-        stop(
+        cond_msg <- paste0(
           "Not all cases are covered: [",
           paste0(missing_cases, collapse = ","),
-          "]",
-          call. = FALSE
+          "]"
         )
+
+        if (identical(guard_type, "hard")) {
+          stop(
+            cond_msg,
+            call. = FALSE
+          )
+        } else {
+          message(cond_msg)
+        }
       }
 
       .(body)

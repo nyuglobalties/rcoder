@@ -60,4 +60,8 @@ test_that("Recoding functionality works", {
   vec_correct <- ifelse(vec %in% c(-99, -88, -77), NA, vec)
 
   expect_equivalent(rcf(vec), vec_correct)
+
+  # Since all `to` codes are integers, confirm that rcoder converted
+  # to integers, not doubles.
+  expect_true(is.integer(rcf(vec)))
 })

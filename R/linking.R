@@ -138,5 +138,12 @@ make_recode_query <- function(linked_codings, from = 1, to_suffix = "to", ...) {
   from_value <- paste0("value_", from)
   to_value <- paste0("value_", to_suffix)
 
+  # End-user ease: if to codes are int-like, use integers instead.
+  # Usually codes are integers, so it makes more sense to use that
+  # storage mode instead.
+  if (is_intlike(subset[[to_value]])) {
+    subset[[to_value]] <- as.integer(subset[[to_value]])
+  }
+
   recode_function(subset[[from_value]], subset[[to_value]], ...)
 }
