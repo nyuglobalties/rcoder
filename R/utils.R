@@ -23,6 +23,16 @@ ui_value <- function(x) {
   paste0("'", x, "'")
 }
 
+ui_vec <- function(x) {
+  if (is.character(x)) {
+    chr_x <- paste0("'", x, "'")
+  } else {
+    chr_x <- as.character(x)
+  }
+
+  paste0("[", paste0(chr_x, collapse = ", "), "]")
+}
+
 cat_line <- function(x, .envir = parent.frame()) {
   cat(glue(x, .envir = .envir), "\n", sep = "")
 }
@@ -46,4 +56,18 @@ rc_assert <- function(x, msg = NULL, .envir = parent.frame()) {
   }
 
   invisible()
+}
+
+is_intlike <- function(x) {
+  if (!is.numeric(x)) {
+    return(FALSE)
+  }
+
+  if (all(is.na(x))) {
+    return(TRUE)
+  }
+
+  x_nona <- x[!is.na(x)]
+
+  isTRUE(all.equal(rep(0, length(x_nona)), x_nona %% 1))
 }

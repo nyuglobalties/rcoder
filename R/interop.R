@@ -52,6 +52,12 @@ coding_to_haven_labels <- function(coding) {
 
   contents <- coding_contents(coding)
   h_labels <- unique(contents$value)
+  nm_h_labels <- unique(contents$label)
+
+  if (length(h_labels) != length(nm_h_labels)) {
+    rc_err("Labels {ui_vec(nm_h_labels)} don't match {ui_vec(h_labels)}")
+  }
+
   names(h_labels) <- unique(contents$label)
 
   h_labels
