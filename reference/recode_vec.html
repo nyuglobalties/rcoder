@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • rcoder</title>
+<title>Recode a vector — recode_vec • rcoder</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,10 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Recode a vector — recode_vec" />
+<meta property="og:description" content="A simple interface to recoding a vector based on the coding linking
+mechanism. If the vector has the &quot;rcoder.coding&quot; attribute, then
+the coding object stored in that attribute will be used by default." />
 
 
 
@@ -58,7 +61,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -103,108 +106,49 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Recode a vector</h1>
+    
+    <div class="hidden name"><code>recode_vec.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>A simple interface to recoding a vector based on the coding linking
+mechanism. If the vector has the "rcoder.coding" attribute, then
+the coding object stored in that attribute will be used by default.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>recode_vec</span><span class='op'>(</span><span class='va'>vec</span>, <span class='va'>to</span>, from <span class='op'>=</span> <span class='fu'>get_attr</span><span class='op'>(</span><span class='va'>vec</span>, <span class='st'>"rcoder.coding"</span><span class='op'>)</span>, .embed <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="as_coding_list.html">as_coding_list()</a></code> </p>
-        </td>
-        <td><p>Evaluate a collection of codings from a character vector</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="assign_coding.html">assign_coding()</a></code> </p>
-        </td>
-        <td><p>Adds a coding as an attribute to a vector</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="code.html">code()</a></code> </p>
-        </td>
-        <td><p>Encode a label to a value with other metadata</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="coding.html">coding()</a></code> <code><a href="coding.html">empty_coding()</a></code> </p>
-        </td>
-        <td><p>Catalog the categorical data representation in a vector</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="coding_to_haven_labels.html">coding_to_haven_labels()</a></code> </p>
-        </td>
-        <td><p>Convert coding to `haven`-compatible labels</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="coding_to_odk.html">coding_to_odk()</a></code> </p>
-        </td>
-        <td><p>Convert a coding object to ODK XLSForm choices</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="eval_coding.html">eval_coding()</a></code> </p>
-        </td>
-        <td><p>Evaluates a coding expression in a safe environment</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is_empty_coding.html">is_empty_coding()</a></code> </p>
-        </td>
-        <td><p>Is an object the empty coding?</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="link_codings.html">link_codings()</a></code> </p>
-        </td>
-        <td><p>Link a coding from others for recoding</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make_recode_query.html">make_recode_query()</a></code> </p>
-        </td>
-        <td><p>Make a recoding call from linked codings</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="matches_coding.html">matches_coding()</a></code> <code><a href="matches_coding.html">verify_matches_coding()</a></code> </p>
-        </td>
-        <td><p>Checks if vector's content adheres to a coding</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="recode_vec.html">recode_vec()</a></code> </p>
-        </td>
-        <td><p>Recode a vector</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>vec</th>
+      <td><p>A vector</p></td>
+    </tr>
+    <tr>
+      <th>to</th>
+      <td><p>A coding object to which the vector will be recoded</p></td>
+    </tr>
+    <tr>
+      <th>from</th>
+      <td><p>A coding object that describes the current coding
+of the vector. Defaults to the "rcoder.coding" attribute value</p></td>
+    </tr>
+    <tr>
+      <th>.embed</th>
+      <td><p>If `TRUE`, `from` will be stored in the "rcoder.coding"
+attribute</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>The recoded vector</p>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

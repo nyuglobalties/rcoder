@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">rcoder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -40,12 +40,15 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
@@ -72,25 +75,25 @@
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
 <p>rcoder’s main functions are <code><a href="reference/coding.html">coding()</a></code> and <code><a href="reference/code.html">code()</a></code>. <code><a href="reference/code.html">code()</a></code> maps a character-valued key to some value to represent a categorical level.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">rcoder</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">magrittr</span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">rcoder</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 
 <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Yes"</span>, <span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt; &lt;Code&gt;</span>
 <span class="co">#&gt; label: 'Yes'</span>
-<span class="co">#&gt; value: 1</span></pre></div>
+<span class="co">#&gt; value: 1</span></code></pre></div>
 <p><code><a href="reference/code.html">code()</a></code> objects can hold an arbitrary amount of metadata. Useful pieces of information to know are descriptions of what levels represent (in case the label doesn’t have enough information) and whether or not the value represents a missing value.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"No response"</span>, <span class="op">-</span><span class="fl">99</span>, description <span class="op">=</span> <span class="st">"Surveyed individual ignored question when asked"</span>, missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"No response"</span>, <span class="op">-</span><span class="fl">99</span>, description <span class="op">=</span> <span class="st">"Surveyed individual ignored question when asked"</span>, missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; &lt;Code&gt;</span>
 <span class="co">#&gt; label: 'No response'</span>
 <span class="co">#&gt; value: -99</span>
 <span class="co">#&gt; description: 'Surveyed individual ignored question when asked'</span>
-<span class="co">#&gt; Represents a missing value</span></pre></div>
+<span class="co">#&gt; Represents a missing value</span></code></pre></div>
 <p><code><a href="reference/coding.html">coding()</a></code> is a collection of <code><a href="reference/code.html">code()</a></code> objects that represents the full set of values for a categorical variable.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="reference/coding.html">coding</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/coding.html">coding</a></span><span class="op">(</span>
   <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Don't know"</span>, <span class="fl">0</span>, missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
   <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Never"</span>, <span class="fl">1</span><span class="op">)</span>,
   <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Rarely"</span>, <span class="fl">2</span><span class="op">)</span>,
@@ -113,10 +116,10 @@
 <span class="co">#&gt; 6 Always      Always          5 Always      FALSE  </span>
 <span class="co">#&gt; 7 No response No response   -99 No response TRUE   </span>
 <span class="co">#&gt; 8 Refused     Refused       -88 Refused     TRUE   </span>
-<span class="co">#&gt; 9 Absent      Absent        -77 Absent      TRUE</span></pre></div>
+<span class="co">#&gt; 9 Absent      Absent        -77 Absent      TRUE</span></code></pre></div>
 <p><code><a href="reference/coding.html">coding()</a></code> objects are designed to be an intermediate representation of categorical data so that they can be converted into different representations on the fly, e.g. ODK XLSForm choices and STATA/SPSS columns via <a href="https://haven.tidyverse.org/"><code>haven</code></a>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="reference/coding.html">coding</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/coding.html">coding</a></span><span class="op">(</span>
   <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Never"</span>, <span class="fl">1</span><span class="op">)</span>,
   <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Rarely"</span>, <span class="fl">2</span><span class="op">)</span>,
   <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Sometimes"</span>, <span class="fl">3</span><span class="op">)</span>,
@@ -132,10 +135,10 @@
 <span class="co">#&gt; 2 frequency     2 Rarely    </span>
 <span class="co">#&gt; 3 frequency     3 Sometimes </span>
 <span class="co">#&gt; 4 frequency     4 Frequently</span>
-<span class="co">#&gt; 5 frequency     5 Always</span></pre></div>
+<span class="co">#&gt; 5 frequency     5 Always</span></code></pre></div>
 <p>To facilitate recoding, <code><a href="reference/coding.html">coding()</a></code> objects link to one another through the <code><a href="reference/code.html">code()</a></code> labels. If multiple values are collapsed into one, use the <code>links_from</code> parameter to identify which values are combined into one.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">original_coding</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/coding.html">coding</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">original_coding</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/coding.html">coding</a></span><span class="op">(</span>
   <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"No"</span>, <span class="fl">0L</span><span class="op">)</span>,
   <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Yes"</span>, <span class="fl">1L</span><span class="op">)</span>,
   <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"No response"</span>, <span class="op">-</span><span class="fl">99L</span>, missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
@@ -156,24 +159,24 @@
 <span class="co">#&gt; 2          No       No        0          No       0</span>
 <span class="co">#&gt; 3 No response  Missing       NA No response     -99</span>
 <span class="co">#&gt; 4     Refused  Missing       NA     Refused     -88</span>
-<span class="co">#&gt; 5         Yes      Yes        1         Yes       1</span></pre></div>
+<span class="co">#&gt; 5         Yes      Yes        1         Yes       1</span></code></pre></div>
 <p>These linked codings can be converted into a function that accepts a vector and returns a recoded vector.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">new_coding</span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">new_coding</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/link_codings.html">link_codings</a></span><span class="op">(</span><span class="va">original_coding</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/make_recode_query.html">make_recode_query</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; function (x) </span>
 <span class="co">#&gt; dplyr::case_when(x == -77L ~ NA_integer_, x == 0L ~ 0L, x == </span>
 <span class="co">#&gt;     -99L ~ NA_integer_, x == -88L ~ NA_integer_, x == 1L ~ 1L)</span>
-<span class="co">#&gt; &lt;environment: 0x7fa9e6633478&gt;</span></pre></div>
+<span class="co">#&gt; &lt;environment: 0x7fa9e6633478&gt;</span></code></pre></div>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>rcoder is not yet on CRAN, so you will need to install from this repository:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nyuglobalties/rcoder"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nyuglobalties/rcoder"</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
   </div>
