@@ -94,7 +94,7 @@ recode_vec <- function(
     rc_err("Use `rcoder::assign_coding` to embed a `coding` to a vector")
   }
 
-  rc_assert(is.vector(vec), "{substitute(vec)} must be a vector")
+  rc_assert(is.atomic(vec), "{substitute(vec)} must be a vector")
   rc_assert(is.coding(to), "{substitute(to)} is not a `coding` object")
   rc_assert(
     is.coding(from),
@@ -123,7 +123,7 @@ recode_vec <- function(
 #' @return The vector with its "rcoder.coding" attribute set to `.coding`
 #' @export 
 assign_coding <- function(vec, .coding) {
-  rc_assert(is.vector(vec), "{substitute(vec)} must be a vector")
+  rc_assert(is.atomic(vec), "{substitute(vec)} must be a vector")
   rc_assert(is.coding(.coding), "{substitute(.coding)} must be a `coding`")
 
   set_attrs(vec, rcoder.coding = .coding)

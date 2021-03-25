@@ -65,3 +65,33 @@ test_that("Recoding functionality works", {
   # to integers, not doubles.
   expect_true(is.integer(rcf(vec)))
 })
+
+test_that("Vector recoding works", {
+  set.seed(9001)
+
+  vec <- sample(0:3, 20, replace = TRUE)
+  expect_null(get_attr(vec, "rcoder.coding"))
+
+  coding_1 <- coding(
+    code("Never", 0),
+    code("Rarely", 1),
+    code("Sometimes", 2),
+    code("Frequently", 3)
+  )
+
+  expect_error(recode_vec(vec, to = coding_1))
+
+  vec <- assign_coding(vec, coding_1)
+  expect_true(!is.null(get_attr(vec, "rcoder.coding")))
+  expect_identical(get_attr(vec, "rcoder.coding"), coding_1)
+
+  coding_2 <- coding(
+    # Using 10 & 11 for no common value overlap
+    code("Uncommon", 10, links_from = c("Never", "Rarely")),
+    code("Common", 11, links_from = c("Sometimes", "Frequently"))
+  )
+
+  vec <- recode_vec(vec, to = coding_2)
+  expect_identical(get_attr(vec, "rcoder.coding"), coding_2)
+  expect_true(all(vec %in% c(10, 11)))
+})
