@@ -175,6 +175,26 @@ print.coding <- function(x, ...) {
   invisible()
 }
 
+#' @export
+as.character.coding <- function(x) {
+  code_calls <- lapply(x, function(code) {
+    if (is.integer(code$value)) {
+      code$value <- as.numeric(code$value)
+    }
+
+    if (isTRUE(code$missing)) {
+      rlang::call2("code", code$label, code$value, missing = TRUE)
+    } else {
+      rlang::call2("code", code$label, code$value)
+    }
+  })
+
+  coding_call <- rlang::call2("coding", !!!code_calls)
+  out <- rlang::expr_deparse(coding_call, width = 50000L)
+
+  out
+}
+
 #' Evaluates a coding expression in a safe environment
 #'
 #' To prevent requiring attaching the `rcoder` package, this function takes in
