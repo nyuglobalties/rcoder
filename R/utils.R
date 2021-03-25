@@ -71,3 +71,21 @@ is_intlike <- function(x) {
 
   isTRUE(all.equal(rep(0, length(x_nona)), x_nona %% 1))
 }
+
+get_attr <- function(obj, attrib) {
+  attr(obj, attrib, exact = TRUE)
+}
+
+set_attrs <- function(obj, ...) {
+  dots <- rlang::dots_list(...)
+
+  if (is.null(names(dots)) || any(names(dots) == "")) {
+    rc_err("All attribs must have names")
+  }
+
+  for (d in names(dots)) {
+    attr(obj, d) <- dots[[d]]
+  }
+
+  obj
+}

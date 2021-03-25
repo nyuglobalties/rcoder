@@ -54,8 +54,56 @@ link_codings <- function(to, ..., .to_suffix = "to", .drop_unused = TRUE) {
   to_dat <- to_dat[, grepl(filter_pattern, names(to_dat))]
   from_dat <- from_dat[, grepl(filter_pattern, names(from_dat))]
 
+  if (length(intersect(to_dat$link, from_dat$link)) == 0) {
+    if (!is.coding(from)) {
+      from_str <- paste0(
+        paste0("\t", vcapply(from, as.character)),
+        collapse = "\n"
+      )
+    } else {
+      from_str <- paste0("\t", as.character(from))
+    }
+
+    to_str <- paste0("\t", as.character(to))
+
+    rc_err(c(
+      "No common links identified. ",
+      "It's possible that you didn't define your labels correctly?\n",
+      "For reference, these are the input codings:\n",
+      "From:\n",
+      "{from_str}\n",
+      "To:\n",
+      "{to_str}"
+    ))
+  }
+
   dat <- merge(to_dat, from_dat, by = "link", all.x = TRUE)
   class(dat) <- c(class(dat), "linked_coding_df")
+
+  if (nrow(dat) < 1) {
+    print("to_dat:")
+    print(to_dat)
+    print("from_dat:")
+    print(from_dat)
+    print("to:")
+    print(as.character(to))
+
+    if (!is.coding(from)) {
+      print("from:")
+
+      for (el in from) {
+        print(as.character(el))
+      }
+    } else {
+      print(as.character(from))
+    }
+
+    rc_err(c(
+      "A problem has occurred. ",
+      "Contact the developer with the provided ",
+      "'to_dat', 'to', 'from_dat', and 'from' values."
+    ))
+  }
 
   dat
 }
@@ -86,64 +134,4 @@ drop_unused_links <- function(to_dat, from_dat) {
   to_links <- to_dat$link
 
   to_dat[to_links %in% from_links, ]
-}
-
-#' Make a recoding call from linked codings
-#'
-#' This creates a function that accepts a vector and recodes it from the
-#' information provided in a `linked_coding_df`
-#'
-#' @param linked_codings A `linked_coding_df`
-#' @param from A character or integer that selects the correct original coding.
-#'             Defaults to 1, the first linked coding.
-#' @param to_suffix The suffix used to signify which columns refer to values to
-#'   which the vector will be recoded
-#' @param ... Any other parameters passed onto the recoding function selector
-#'
-#' @export
-make_recode_query <- function(linked_codings, from = 1, to_suffix = "to", ...) {
-  stopifnot(inherits(linked_codings, "linked_coding_df"))
-
-  suffixed_columns <- c("label", "value")
-  from_column_patterns <- paste0(
-    paste0(suffixed_columns, "_", from),
-    collapse = "|"
-  )
-
-  to_column_patterns <- paste0(
-    paste0(suffixed_columns, "_", to_suffix),
-    collapse = "|"
-  )
-
-  from_columns <- grep(from_column_patterns, names(linked_codings), value = TRUE)
-  to_columns <- grep(to_column_patterns, names(linked_codings), value = TRUE)
-
-  if (length(from_columns) < 1) {
-    rc_err("Origin '{from}' not found in linked coding data.frame.")
-  }
-
-  if (length(to_columns) < 1) {
-    rc_err(c(
-      "'to' columns for linked coding data.frame not found.\n",
-      "Perhaps '{to_suffix}' is not the 'to' column ",
-      "tag you chose?"
-    ))
-  }
-
-  subset <- unique(linked_codings[, c("link", to_columns, from_columns)])
-
-  # If wave label is NA, that value was not included in that wave. Drop.
-  subset <- subset[!is.na(subset[[paste0("label_", from)]]), ]
-
-  from_value <- paste0("value_", from)
-  to_value <- paste0("value_", to_suffix)
-
-  # End-user ease: if to codes are int-like, use integers instead.
-  # Usually codes are integers, so it makes more sense to use that
-  # storage mode instead.
-  if (is_intlike(subset[[to_value]])) {
-    subset[[to_value]] <- as.integer(subset[[to_value]])
-  }
-
-  recode_function(subset[[from_value]], subset[[to_value]], ...)
 }
