@@ -62,7 +62,7 @@ make_recode_query <- function(linked_codings, from = 1, to_suffix = "to", ...) {
     print(subset)
     rc_err(c(
       "A problem has occurred. ",
-      "Contact the developer with the provided ", 
+      "Contact the developer with the provided ",
       "'linked_codings' and 'subset' values."
     ))
   }

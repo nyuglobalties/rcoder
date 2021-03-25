@@ -57,6 +57,31 @@ link_codings <- function(to, ..., .to_suffix = "to", .drop_unused = TRUE) {
   dat <- merge(to_dat, from_dat, by = "link", all.x = TRUE)
   class(dat) <- c(class(dat), "linked_coding_df")
 
+  if (nrow(dat) < 1) {
+    print("to_dat:")
+    print(to_dat)
+    print("from_dat:")
+    print(from_dat)
+    print("to:")
+    print(as.character(to))
+
+    if (!is.coding(from)) {
+      print("from:")
+
+      for (el in from) {
+        print(as.character(el))
+      }
+    } else {
+      print(as.character(from))
+    }
+
+    rc_err(c(
+      "A problem has occurred. ",
+      "Contact the developer with the provided ",
+      "'to_dat', 'to', 'from_dat', and 'from' values."
+    ))
+  }
+
   dat
 }
 
