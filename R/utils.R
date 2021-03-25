@@ -80,7 +80,7 @@ set_attrs <- function(obj, ...) {
   dots <- rlang::dots_list(...)
 
   if (is.null(names(dots)) || any(names(dots) == "")) {
-    stop0("All attribs must have names")
+    rc_err("All attribs must have names")
   }
 
   for (d in names(dots)) {

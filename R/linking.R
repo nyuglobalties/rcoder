@@ -54,6 +54,29 @@ link_codings <- function(to, ..., .to_suffix = "to", .drop_unused = TRUE) {
   to_dat <- to_dat[, grepl(filter_pattern, names(to_dat))]
   from_dat <- from_dat[, grepl(filter_pattern, names(from_dat))]
 
+  if (length(intersect(to_dat$link, from_dat$link)) == 0) {
+    if (!is.coding(from)) {
+      from_str <- paste0(
+        paste0("\t", vcapply(from, as.character)),
+        collapse = "\n"
+      )
+    } else {
+      from_str <- paste0("\t", as.character(from))
+    }
+
+    to_str <- paste0("\t", as.character(to))
+
+    rc_err(c(
+      "No common links identified. ",
+      "It's possible that you didn't define your labels correctly?\n",
+      "For reference, these are the input codings:\n",
+      "From:\n",
+      "{from_str}\n",
+      "To:\n",
+      "{to_str}"
+    ))
+  }
+
   dat <- merge(to_dat, from_dat, by = "link", all.x = TRUE)
   class(dat) <- c(class(dat), "linked_coding_df")
 

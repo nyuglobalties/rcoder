@@ -1,5 +1,23 @@
 context("linking")
 
+test_that("No found links trigger an error", {
+  coding_from <- coding(
+    code("Yes", 1),
+    code("No", 0)
+  )
+
+  coding_to <- coding(
+    code("YES", "YES"),
+    code("NO", "NO")
+  )
+
+  err <- expect_error(link_codings(coding_to, coding_from))
+  expect_true(grepl("^No common links", err$message))
+
+  err2 <- expect_error(link_codings(coding_to, coding_from, coding_from))
+  expect_true(grepl("^No common links", err2$message))
+})
+
 test_that("from only accepts a coding or list of codings", {
   coding_1 <- coding(
     code("Yes", 1),

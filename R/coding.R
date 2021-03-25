@@ -176,17 +176,27 @@ print.coding <- function(x, ...) {
 }
 
 #' @export
-as.character.coding <- function(x) {
+as.character.coding <- function(x, ...) {
   code_calls <- lapply(x, function(code) {
     if (is.integer(code$value)) {
       code$value <- as.numeric(code$value)
     }
 
+    cmd <- rlang::call2("code", code$label, code$value)
+
     if (isTRUE(code$missing)) {
-      rlang::call2("code", code$label, code$value, missing = TRUE)
-    } else {
-      rlang::call2("code", code$label, code$value)
+      cmd[["missing"]] <- TRUE
     }
+
+    if (!identical(code$links_from, code$label)) {
+      cmd[["links_from"]] <- code$links_from
+    }
+
+    if (!identical(code$description, code$label)) {
+      cmd[["description"]] <- code$description
+    }
+
+    cmd
   })
 
   coding_call <- rlang::call2("coding", !!!code_calls)
