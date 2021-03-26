@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcoder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@
     <p>Stores a coding at the "rcoder.coding" attribute of a vector</p>
     </div>
 
-    <pre class="usage"><span class='fu'>assign_coding</span><span class='op'>(</span><span class='va'>vec</span>, <span class='va'>.coding</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>assign_coding</span><span class='op'>(</span><span class='va'>vec</span>, <span class='va'>.coding</span>, .bpr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,6 +127,12 @@
     <tr>
       <th>.coding</th>
       <td><p>A `coding` object</p></td>
+    </tr>
+    <tr>
+      <th>.bpr</th>
+      <td><p>Also overwrite the "bpr.coding" attribute with the character
+representation of `.coding`. Used for interop with blueprintr
+variable decorations.</p></td>
     </tr>
     </table>
 
