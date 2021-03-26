@@ -4,12 +4,16 @@
 \alias{assign_coding}
 \title{Adds a coding as an attribute to a vector}
 \usage{
-assign_coding(vec, .coding)
+assign_coding(vec, .coding, .bpr = TRUE)
 }
 \arguments{
 \item{vec}{A vector}
 
 \item{.coding}{A `coding` object}
+
+\item{.bpr}{Also overwrite the "bpr.coding" attribute with the character
+representation of `.coding`. Used for interop with blueprintr
+variable decorations.}
 }
 \value{
 The vector with its "rcoder.coding" attribute set to `.coding`
