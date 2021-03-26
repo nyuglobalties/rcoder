@@ -84,6 +84,10 @@ test_that("Vector recoding works", {
   vec <- assign_coding(vec, coding_1)
   expect_true(!is.null(get_attr(vec, "rcoder.coding")))
   expect_identical(get_attr(vec, "rcoder.coding"), coding_1)
+  expect_identical(
+    get_attr(vec, "bpr.coding"),
+    as.character(coding_1)
+  )
 
   coding_2 <- coding(
     # Using 10 & 11 for no common value overlap
@@ -91,7 +95,8 @@ test_that("Vector recoding works", {
     code("Common", 11, links_from = c("Sometimes", "Frequently"))
   )
 
-  vec <- recode_vec(vec, to = coding_2)
+  vec <- recode_vec(vec, to = coding_2, .bpr = FALSE)
   expect_identical(get_attr(vec, "rcoder.coding"), coding_2)
+  expect_null(get_attr(vec, "bpr.coding"))
   expect_true(all(vec %in% c(10, 11)))
 })
