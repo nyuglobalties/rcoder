@@ -4,7 +4,13 @@
 \alias{recode_vec}
 \title{Recode a vector}
 \usage{
-recode_vec(vec, to, from = get_attr(vec, "rcoder.coding"), .embed = TRUE)
+recode_vec(
+  vec,
+  to,
+  from = get_attr(vec, "rcoder.coding"),
+  .embed = TRUE,
+  .bpr = TRUE
+)
 }
 \arguments{
 \item{vec}{A vector}
@@ -16,6 +22,10 @@ of the vector. Defaults to the "rcoder.coding" attribute value}
 
 \item{.embed}{If `TRUE`, `from` will be stored in the "rcoder.coding"
 attribute}
+
+\item{.bpr}{If `TRUE`, adds the _character_ representation of
+the coding to the "bpr.coding" attribute. Used for interop with
+blueprintr variable decorations}
 }
 \value{
 The recoded vector

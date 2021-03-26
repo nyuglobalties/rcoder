@@ -82,13 +82,17 @@ make_recode_query <- function(linked_codings, from = 1, to_suffix = "to", ...) {
 #'   of the vector. Defaults to the "rcoder.coding" attribute value
 #' @param .embed If `TRUE`, `from` will be stored in the "rcoder.coding"
 #'   attribute
+#' @param .bpr If `TRUE`, adds the _character_ representation of
+#'   the coding to the "bpr.coding" attribute. Used for interop with
+#'   blueprintr variable decorations
 #' @return The recoded vector
 #' @export 
 recode_vec <- function(
   vec,
   to,
   from = get_attr(vec, "rcoder.coding"),
-  .embed = TRUE
+  .embed = TRUE,
+  .bpr = TRUE
 ) {
   if (is.null(from)) {
     rc_err("Use `rcoder::assign_coding` to embed a `coding` to a vector")
@@ -101,14 +105,13 @@ recode_vec <- function(
     "{substitute(from)} is not a `coding`"
   )
 
-
   linked <- link_codings(to, from)
   recode_func <- make_recode_query(linked)
 
   recoded_vec <- recode_func(vec)
 
   if (isTRUE(.embed)) {
-    recoded_vec <- assign_coding(recoded_vec, to)
+    recoded_vec <- assign_coding(recoded_vec, to, .bpr)
   }
 
   recoded_vec
@@ -120,11 +123,18 @@ recode_vec <- function(
 #' 
 #' @param vec A vector
 #' @param .coding A `coding` object
+#' @param .bpr Also overwrite the "bpr.coding" attribute with the character
+#'   representation of `.coding`. Used for interop with blueprintr
+#'   variable decorations.
 #' @return The vector with its "rcoder.coding" attribute set to `.coding`
 #' @export 
-assign_coding <- function(vec, .coding) {
+assign_coding <- function(vec, .coding, .bpr = TRUE) {
   rc_assert(is.atomic(vec), "{substitute(vec)} must be a vector")
   rc_assert(is.coding(.coding), "{substitute(.coding)} must be a `coding`")
 
-  set_attrs(vec, rcoder.coding = .coding)
+  set_attrs(
+    vec,
+    rcoder.coding = .coding,
+    bpr.coding = if (isTRUE(.bpr)) as.character(.coding) else NULL
+  )
 }

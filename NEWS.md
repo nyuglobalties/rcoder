@@ -1,3 +1,7 @@
+# rcoder 0.1.2
+
+* Adds {blueprintr} variable decoration support during assigning coding or recoding of vectors
+
 # rcoder 0.1.1
 
 * Adds `recode_vec` and `assign_coding`, simple interfaces for recoding vectors and embedding codings as attributes in vectors, respectively
