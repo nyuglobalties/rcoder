@@ -74,7 +74,7 @@ the coding object stored in that attribute will be used by default." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcoder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -119,13 +119,7 @@ mechanism. If the vector has the "rcoder.coding" attribute, then
 the coding object stored in that attribute will be used by default.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>recode_vec</span><span class='op'>(</span>
-  <span class='va'>vec</span>,
-  <span class='va'>to</span>,
-  from <span class='op'>=</span> <span class='fu'>get_attr</span><span class='op'>(</span><span class='va'>vec</span>, <span class='st'>"rcoder.coding"</span><span class='op'>)</span>,
-  .embed <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  .bpr <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>recode_vec</span><span class='op'>(</span><span class='va'>vec</span>, <span class='va'>to</span>, from <span class='op'>=</span> <span class='cn'>NULL</span>, .embed <span class='op'>=</span> <span class='cn'>TRUE</span>, .bpr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,7 +135,9 @@ the coding object stored in that attribute will be used by default.</p>
     <tr>
       <th>from</th>
       <td><p>A coding object that describes the current coding
-of the vector. Defaults to the "rcoder.coding" attribute value</p></td>
+of the vector. Defaults to the "rcoder.coding" attribute value, if
+it exists, _or_ the "bpr.coding" value (from blueprintr). If neither
+are found, `from` stays `NULL` and the function errors.</p></td>
     </tr>
     <tr>
       <th>.embed</th>
