@@ -1,3 +1,7 @@
+# rcoder 0.1.3
+
+* Allows "bpr.coding" attributes to be suitable sources for recoding if "rcoder.coding" is not defined
+
 # rcoder 0.1.2
 
 * Adds {blueprintr} variable decoration support during assigning coding or recoding of vectors

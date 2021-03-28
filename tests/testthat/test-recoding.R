@@ -70,7 +70,7 @@ test_that("Vector recoding works", {
   set.seed(9001)
 
   vec <- sample(0:3, 20, replace = TRUE)
-  expect_null(get_attr(vec, "rcoder.coding"))
+  expect_null(get_vector_attrib(vec))
 
   coding_1 <- coding(
     code("Never", 0),
@@ -79,6 +79,14 @@ test_that("Vector recoding works", {
     code("Frequently", 3)
   )
 
+  # Allows "bpr.coding" to be used as a suitable source
+  vec2 <- sample(0:3, 20, replace = TRUE)
+  vec2 <- set_attrs(
+    vec2,
+    bpr.coding = as.character(coding_1)
+  )
+  expect_identical(get_vector_attrib(vec2), coding_1)
+  
   expect_error(recode_vec(vec, to = coding_1))
 
   vec <- assign_coding(vec, coding_1)

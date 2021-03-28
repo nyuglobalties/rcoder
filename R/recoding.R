@@ -70,6 +70,17 @@ make_recode_query <- function(linked_codings, from = 1, to_suffix = "to", ...) {
   recode_function(subset[[from_value]], subset[[to_value]], ...)
 }
 
+get_vector_attrib <- function(vec) {
+  attrib <- get_attr(vec, "rcoder.coding")
+  bpr_attrib <- get_attr(vec, "bpr.coding")
+
+  if (is.null(attrib) && !is.null(bpr_attrib)) {
+    attrib <- eval_coding(rlang::parse_expr(bpr_attrib))
+  }
+
+  attrib
+}
+
 #' Recode a vector
 #' 
 #' A simple interface to recoding a vector based on the coding linking
@@ -79,7 +90,9 @@ make_recode_query <- function(linked_codings, from = 1, to_suffix = "to", ...) {
 #' @param vec A vector
 #' @param to A coding object to which the vector will be recoded
 #' @param from A coding object that describes the current coding
-#'   of the vector. Defaults to the "rcoder.coding" attribute value
+#'   of the vector. Defaults to the "rcoder.coding" attribute value, if
+#'   it exists, _or_ the "bpr.coding" value (from blueprintr). If neither
+#'   are found, `from` stays `NULL` and the function errors.
 #' @param .embed If `TRUE`, `from` will be stored in the "rcoder.coding"
 #'   attribute
 #' @param .bpr If `TRUE`, adds the _character_ representation of
@@ -90,12 +103,16 @@ make_recode_query <- function(linked_codings, from = 1, to_suffix = "to", ...) {
 recode_vec <- function(
   vec,
   to,
-  from = get_attr(vec, "rcoder.coding"),
+  from = NULL,
   .embed = TRUE,
   .bpr = TRUE
 ) {
   if (is.null(from)) {
-    rc_err("Use `rcoder::assign_coding` to embed a `coding` to a vector")
+    from <- get_vector_attrib(vec)
+
+    if (is.null(from)) {
+      rc_err("Use `rcoder::assign_coding` to embed a `coding` to a vector")
+    }
   }
 
   rc_assert(is.atomic(vec), "{substitute(vec)} must be a vector")

@@ -4,13 +4,7 @@
 \alias{recode_vec}
 \title{Recode a vector}
 \usage{
-recode_vec(
-  vec,
-  to,
-  from = get_attr(vec, "rcoder.coding"),
-  .embed = TRUE,
-  .bpr = TRUE
-)
+recode_vec(vec, to, from = NULL, .embed = TRUE, .bpr = TRUE)
 }
 \arguments{
 \item{vec}{A vector}
@@ -18,7 +12,9 @@ recode_vec(
 \item{to}{A coding object to which the vector will be recoded}
 
 \item{from}{A coding object that describes the current coding
-of the vector. Defaults to the "rcoder.coding" attribute value}
+of the vector. Defaults to the "rcoder.coding" attribute value, if
+it exists, _or_ the "bpr.coding" value (from blueprintr). If neither
+are found, `from` stays `NULL` and the function errors.}
 
 \item{.embed}{If `TRUE`, `from` will be stored in the "rcoder.coding"
 attribute}
