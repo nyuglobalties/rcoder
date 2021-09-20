@@ -42,7 +42,11 @@ link_codings <- function(to, ..., .to_suffix = "to", .drop_unused = TRUE) {
   to_dat <- as.data.frame(to, suffix = .to_suffix)
 
   if (nrow(to_dat) < nrow(from_dat)) {
-    rc_err("Not all cases covered while linking codings.")
+    rc_err(c(
+      "Not all cases covered while linking codings. ",
+      "Access the `to` and `from` members of this error ",
+      "object to diagnose the issue."
+    ), to = to_dat, from = from_dat)
   }
 
   if (isTRUE(.drop_unused)) {
