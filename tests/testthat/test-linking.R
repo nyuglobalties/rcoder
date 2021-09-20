@@ -79,3 +79,24 @@ test_that("from only accepts a coding or list of codings", {
   expect_true(setequal(names(test_tbl_2), names(linked_all_indexed)))
   expect_true(setequal(linked_all_indexed, test_tbl_2))
 })
+
+test_that("Incomplete linking creates an informative error", {
+  coding_1 <- coding(
+    code("Yes", 1),
+    code("No", 0),
+    code("Not present", -99),
+    code("Refused", -88),
+    code("Don't know", -77)
+  )
+
+  coding_2 <- coding(
+    code("Yes", "YES"),
+    code("No", "NO"),
+    code("No response", "N/A")
+  )
+
+  err <- expect_error(link_codings(coding_2, coding_1))
+
+  expect_true(is.data.frame(err$to))
+  expect_true(is.data.frame(err$from))
+})
