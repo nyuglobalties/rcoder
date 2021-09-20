@@ -1,3 +1,7 @@
+# rcoder 0.1.4
+
+* Adds `to` and `from` members to incomplete linking error object for end-user diagnostics
+
 # rcoder 0.1.3
 
 * Allows "bpr.coding" attributes to be suitable sources for recoding if "rcoder.coding" is not defined
