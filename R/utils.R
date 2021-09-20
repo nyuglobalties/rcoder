@@ -37,10 +37,10 @@ cat_line <- function(x, .envir = parent.frame()) {
   cat(glue(x, .envir = .envir), "\n", sep = "")
 }
 
-rc_err <- function(x, .envir = parent.frame()) {
+rc_err <- function(x, .envir = parent.frame(), ...) {
   msg <- glue(glue_collapse(x), .envir = .envir)
 
-  rlang::abort(.subclass = "rc_error", message = msg)
+  rlang::abort(.subclass = "rc_error", message = msg, ...)
 }
 
 rc_assert <- function(x, msg = NULL, .envir = parent.frame()) {
