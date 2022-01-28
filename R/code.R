@@ -20,6 +20,13 @@ code <- function(label,
                  links_from = label,
                  missing = FALSE,
                  ...) {
+  if (missing(value)) {
+    rc_err(c(
+      "No value provided to label {ui_value(label)}. ",
+      "Probably caused by forgetting the second argument to code()"
+    ))
+  }
+
   rc_assert(
     is.character(label),
     "label ({ui_value(label)}) has type {ui_value(typeof(label))} when it should be 'character'."
