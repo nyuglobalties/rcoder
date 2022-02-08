@@ -1,3 +1,10 @@
+# rcoder 0.2.0
+
+* `link_codings` now doesn't drop unused links by default, preferring to error out instead
+* `link_codings(.drop_unused)` now signals to drop any links in `from` that aren't captured in `to`, harmonizing information flow
+* `as.character.coding` now doesn't include `links_from` by default. If you'd like to include that, use `as.character(include_links_from = TRUE)`
+* Missing `value` statements to `code()` now are reported in error message for better debugging experience
+
 # rcoder 0.1.4
 
 * Adds `to` and `from` members to incomplete linking error object for end-user diagnostics

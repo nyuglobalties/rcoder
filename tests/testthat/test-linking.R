@@ -12,10 +12,10 @@ test_that("No found links trigger an error", {
   )
 
   err <- expect_error(link_codings(coding_to, coding_from))
-  expect_true(grepl("^No common links", err$message))
+  expect_true(grepl("^Some links", err$message))
 
   err2 <- expect_error(link_codings(coding_to, coding_from, coding_from))
-  expect_true(grepl("^No common links", err2$message))
+  expect_true(grepl("^Some links", err2$message))
 })
 
 test_that("from only accepts a coding or list of codings", {
@@ -53,8 +53,9 @@ test_that("from only accepts a coding or list of codings", {
 
   test_tbl <- dplyr::tribble(
     ~link, ~label_to, ~value_to, ~label_1, ~value_1,
-    "Don't know", "Missing", NA, "Don't know",  -77,
+    "Don't know", "Missing", NA, "Don't know", -77,
     "No", "No", 0, "No", 0,
+    "No response", "Missing", NA, NA, NA,
     "Not present", "Missing", NA, "Not present", -99,
     "Refused", "Missing", NA, "Refused", -88,
     "Yes", "Yes", 1, "Yes", 1
@@ -67,7 +68,7 @@ test_that("from only accepts a coding or list of codings", {
 
   test_tbl_2 <- dplyr::tribble(
     ~link, ~label_to, ~value_to, ~label_1, ~value_1, ~label_2, ~value_2,
-    "Don't know", "Missing", NA, "Don't know",  -77, NA, NA,
+    "Don't know", "Missing", NA, "Don't know", -77, NA, NA,
     "No", "No", 0, "No", 0, "No", "NO",
     "No response", "Missing", NA, NA, NA, "No response", "N/A",
     "Not present", "Missing", NA, "Not present", -99, NA, NA,
@@ -99,4 +100,23 @@ test_that("Incomplete linking creates an informative error", {
 
   expect_true(is.data.frame(err$to))
   expect_true(is.data.frame(err$from))
+
+  # Issue encountered in a project
+  homogenized_coding <- coding(
+    code("Nearly everyday", 3),
+    code("More than half the days", 2),
+    code("A few days", 1),
+    code("Not at all", 0)
+  )
+
+  wave_coding <- coding(
+    code("Nearly everyday", 3),
+    code("More than half the days", 2),
+    code("A few days", 1),
+    code("No days", 0)
+  )
+
+  err <- expect_rc_error(link_codings(homogenized_coding, wave_coding))
+
+  expect_identical(err$missing_links, "No days")
 })

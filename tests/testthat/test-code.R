@@ -1,9 +1,5 @@
 context("Coding")
 
-expect_rc_error <- function(object, ...) {
-  expect_error(object, class = "rc_error", ...)
-}
-
 test_that("code definitions are consistent", {
   expect_rc_error(code(1, 1))
   expect_rc_error(code(1, 1, description = 1))
