@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -32,18 +34,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">rcoder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -63,21 +59,21 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="rcoder" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#rcoder" class="anchor"></a>rcoder</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="rcoder">rcoder<a class="anchor" aria-label="anchor" href="#rcoder"></a>
+</h1></div>
 <blockquote>
 <p>rcoder outlines a lightweight data structure that captures categorical codings and easily converts them to other implementations.</p>
 </blockquote>
 <!-- badges: start -->
-<p><a href="https://github.com/nyuglobalties/rcoder/actions"><img src="https://github.com/nyuglobalties/rcoder/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a> <!-- badges: end --></p>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
+
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
 <p>rcoder’s main functions are <code><a href="reference/coding.html">coding()</a></code> and <code><a href="reference/code.html">code()</a></code>. <code><a href="reference/code.html">code()</a></code> maps a character-valued key to some value to represent a categorical level.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">rcoder</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">rcoder</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span>
 
 <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Yes"</span>, <span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt; &lt;Code&gt;</span>
@@ -117,7 +113,7 @@
 <span class="co">#&gt; 7 No response No response   -99 No response TRUE   </span>
 <span class="co">#&gt; 8 Refused     Refused       -88 Refused     TRUE   </span>
 <span class="co">#&gt; 9 Absent      Absent        -77 Absent      TRUE</span></code></pre></div>
-<p><code><a href="reference/coding.html">coding()</a></code> objects are designed to be an intermediate representation of categorical data so that they can be converted into different representations on the fly, e.g. ODK XLSForm choices and STATA/SPSS columns via <a href="https://haven.tidyverse.org/"><code>haven</code></a>.</p>
+<p><code><a href="reference/coding.html">coding()</a></code> objects are designed to be an intermediate representation of categorical data so that they can be converted into different representations on the fly, e.g. ODK XLSForm choices and STATA/SPSS columns via <a href="https://haven.tidyverse.org/" class="external-link"><code>haven</code></a>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/coding.html">coding</a></span><span class="op">(</span>
   <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Never"</span>, <span class="fl">1</span><span class="op">)</span>,
@@ -126,7 +122,7 @@
   <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Frequently"</span>, <span class="fl">4</span><span class="op">)</span>,
   <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Always"</span>, <span class="fl">5</span><span class="op">)</span>,
   .label <span class="op">=</span> <span class="st">"frequency"</span>
-<span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="reference/coding_to_odk.html">coding_to_odk</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 5 x 3</span>
 <span class="co">#&gt;   list_name  name label     </span>
@@ -149,10 +145,10 @@
 <span class="va">new_coding</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/coding.html">coding</a></span><span class="op">(</span>
   <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"No"</span>, <span class="fl">0L</span><span class="op">)</span>,
   <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Yes"</span>, <span class="fl">1L</span><span class="op">)</span>,
-  <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Missing"</span>, <span class="cn">NA</span>, links_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No response"</span>, <span class="st">"Refused"</span>, <span class="st">"Absent"</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Missing"</span>, <span class="cn">NA</span>, links_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"No response"</span>, <span class="st">"Refused"</span>, <span class="st">"Absent"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span>
 
-<span class="va">new_coding</span> <span class="op">%&gt;%</span> 
+<span class="va">new_coding</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="reference/link_codings.html">link_codings</a></span><span class="op">(</span><span class="va">original_coding</span><span class="op">)</span>
 <span class="co">#&gt;          link label_to value_to     label_1 value_1</span>
 <span class="co">#&gt; 1      Absent  Missing       NA      Absent     -77</span>
@@ -162,38 +158,55 @@
 <span class="co">#&gt; 5         Yes      Yes        1         Yes       1</span></code></pre></div>
 <p>These linked codings can be converted into a function that accepts a vector and returns a recoded vector.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">new_coding</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/link_codings.html">link_codings</a></span><span class="op">(</span><span class="va">original_coding</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">new_coding</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="reference/link_codings.html">link_codings</a></span><span class="op">(</span><span class="va">original_coding</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="reference/make_recode_query.html">make_recode_query</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; function (x) </span>
 <span class="co">#&gt; dplyr::case_when(x == -77L ~ NA_integer_, x == 0L ~ 0L, x == </span>
 <span class="co">#&gt;     -99L ~ NA_integer_, x == -88L ~ NA_integer_, x == 1L ~ 1L)</span>
 <span class="co">#&gt; &lt;environment: 0x7fa9e6633478&gt;</span></code></pre></div>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>rcoder is not yet on CRAN, so you will need to install from this repository:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nyuglobalties/rcoder"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"nyuglobalties/rcoder"</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></small></li>
+<li><small><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></small></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Patrick Anker <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-2302-0445" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html#citation">Citing rcoder</a></li>
+</ul>
+</div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Patrick Anker <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-2302-0445" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/nyuglobalties/rcoder/actions" class="external-link"><img src="https://github.com/nyuglobalties/rcoder/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
 </ul>
 </div>
 
@@ -202,11 +215,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Patrick Anker.</p>
+  <p></p>
+<p>Developed by Patrick Anker.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -214,6 +229,8 @@
 
   
 
+
+  
 
   </body>
 </html>
