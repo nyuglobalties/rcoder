@@ -139,13 +139,11 @@ coding_label <- function(coding) {
 }
 
 #' @export
-as.data.frame.coding <- function(
-  x,
-  row.names = NULL,
-  optional = NULL,
-  suffix = NULL,
-  ...
-) {
+as.data.frame.coding <- function(x,
+                                 row.names = NULL,
+                                 optional = NULL,
+                                 suffix = NULL,
+                                 ...) {
   out <- coding_contents(x)
 
   if (!is.null(suffix)) {
@@ -176,7 +174,7 @@ print.coding <- function(x, ...) {
 }
 
 #' @export
-as.character.coding <- function(x, ...) {
+as.character.coding <- function(x, include_links_from = FALSE, ...) {
   code_calls <- lapply(x, function(code) {
     if (is.integer(code$value)) {
       code$value <- as.numeric(code$value)
@@ -188,8 +186,8 @@ as.character.coding <- function(x, ...) {
       cmd[["missing"]] <- TRUE
     }
 
-    if (!identical(code$links_from, code$label)) {
-      cmd[["links_from"]] <- code$links_from
+    if (!identical(code$links_from, code$label) && isTRUE(include_links_from)) {
+      cmd[["links_from"]] <- rlang::call2("c", !!!code$links_from)
     }
 
     if (!identical(code$description, code$label)) {

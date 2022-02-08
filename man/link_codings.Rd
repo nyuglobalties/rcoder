@@ -4,7 +4,7 @@
 \alias{link_codings}
 \title{Link a coding from others for recoding}
 \usage{
-link_codings(to, ..., .to_suffix = "to", .drop_unused = TRUE)
+link_codings(to, ..., .to_suffix = "to", .drop_unused = FALSE)
 }
 \arguments{
 \item{to}{A coding to be linked to}
@@ -14,8 +14,8 @@ link_codings(to, ..., .to_suffix = "to", .drop_unused = TRUE)
 \item{.to_suffix}{A suffix signifying which columns in the output `data.frame`
 came from `to`}
 
-\item{.drop_unused}{Logical flag to drop any codes in `to` that have no
-counterparts in `...`}
+\item{.drop_unused}{Logical flag to drop any codes in `...` that have no
+counterparts in `to`}
 }
 \value{
 A `linked_coding_df` with all necessary information for a recoding

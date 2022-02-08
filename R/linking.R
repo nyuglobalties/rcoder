@@ -8,13 +8,13 @@
 #' @param ... Codings to be linked from
 #' @param .to_suffix A suffix signifying which columns in the output `data.frame`
 #'   came from `to`
-#' @param .drop_unused Logical flag to drop any codes in `to` that have no
-#'   counterparts in `...`
+#' @param .drop_unused Logical flag to drop any codes in `...` that have no
+#'   counterparts in `to`
 #' @return A `linked_coding_df` with all necessary information for a recoding
 #'   query
 #'
 #' @export
-link_codings <- function(to, ..., .to_suffix = "to", .drop_unused = TRUE) {
+link_codings <- function(to, ..., .to_suffix = "to", .drop_unused = FALSE) {
   rc_assert(is.coding(to))
 
   from <- rlang::dots_list(...)
@@ -54,60 +54,29 @@ link_codings <- function(to, ..., .to_suffix = "to", .drop_unused = TRUE) {
   }
 
   # Only include link, value, and label
-  filter_pattern <- paste0(paste0("^", c("link", "value", "label")), collapse = "|")
+  filter_pattern <- paste0(
+    paste0("^", c("link", "value", "label")),
+    collapse = "|"
+  )
   to_dat <- to_dat[, grepl(filter_pattern, names(to_dat))]
   from_dat <- from_dat[, grepl(filter_pattern, names(from_dat))]
 
-  if (length(intersect(to_dat$link, from_dat$link)) == 0) {
-    if (!is.coding(from)) {
-      from_str <- paste0(
-        paste0("\t", vcapply(from, as.character)),
-        collapse = "\n"
-      )
-    } else {
-      from_str <- paste0("\t", as.character(from))
-    }
+  missing_links <- setdiff(from_dat$link, to_dat$link)
 
-    to_str <- paste0("\t", as.character(to))
-
-    rc_err(c(
-      "No common links identified. ",
-      "It's possible that you didn't define your labels correctly?\n",
-      "For reference, these are the input codings:\n",
-      "From:\n",
-      "{from_str}\n",
-      "To:\n",
-      "{to_str}"
-    ))
+  if (length(missing_links) > 0) {
+    rc_err(
+      c(
+        "Some links in `to` are not accounted for ",
+        " in `from`: {ui_vec(missing_links)}"
+      ),
+      from = from_dat,
+      to = to_dat,
+      missing_links = missing_links
+    )
   }
 
   dat <- merge(to_dat, from_dat, by = "link", all.x = TRUE)
   class(dat) <- c(class(dat), "linked_coding_df")
-
-  if (nrow(dat) < 1) {
-    print("to_dat:")
-    print(to_dat)
-    print("from_dat:")
-    print(from_dat)
-    print("to:")
-    print(as.character(to))
-
-    if (!is.coding(from)) {
-      print("from:")
-
-      for (el in from) {
-        print(as.character(el))
-      }
-    } else {
-      print(as.character(from))
-    }
-
-    rc_err(c(
-      "A problem has occurred. ",
-      "Contact the developer with the provided ",
-      "'to_dat', 'to', 'from_dat', and 'from' values."
-    ))
-  }
 
   dat
 }
@@ -137,5 +106,5 @@ drop_unused_links <- function(to_dat, from_dat) {
   from_links <- from_dat$link
   to_links <- to_dat$link
 
-  to_dat[to_links %in% from_links, ]
+  from_links[from_links %in% to_links, ]
 }
