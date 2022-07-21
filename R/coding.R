@@ -30,9 +30,14 @@ coding <- function(..., .label = NULL) {
   }
 
   values <- lapply(codes, function(x) x$value)
-  values_no_na <- values[!is.na(values)]
+  values_check <- values[!is.na(values)]
 
-  if (!all(vcapply(values_no_na, typeof) == typeof(values_no_na[[1]]))) {
+  # Case where all values are missing
+  if (length(values_check) < 1) {
+    values_check <- values[is.na(values)]
+  }
+
+  if (!all(vcapply(values_check, typeof) == typeof(values_check[[1]]))) {
     rc_err(c(
       "Coding types must be constant.\n",
       "Perhaps you forgot to wrap your numbers in quotes?"
@@ -76,17 +81,14 @@ labels.coding <- function(x, ...) attr(x, "labels", exact = TRUE)
 select_codes_if <- function(.coding, .p, ...) {
   rc_assert(is.coding(.coding) && is.function(.p))
 
-  matching_codes <- lapply(.coding, function(code) {
-    if (.p(code, ...)) {
-      code
-    } else {
-      list()
-    }
-  })
+  matching_codes <- vlapply(.coding, function(.x) .p(.x, ...))
 
-  matching_codes <- matching_codes[!vlapply(matching_codes, function(x) identical(x, list()))]
+  if (sum(matching_codes) < 1) {
+    return(empty_coding())
+  }
 
-  do.call(coding, matching_codes)
+  sub_coding <- .coding[matching_codes]
+  do.call(coding, sub_coding)
 }
 
 select_codes_by_label <- function(.coding, .labels) {
@@ -105,6 +107,18 @@ coding_values <- function(coding) {
   unlist(lapply(coding, function(code) code$value))
 }
 
+#' Get missing codes from a coding
+#'
+#' Takes a coding a returns a new coding
+#' with all codes that represent a missing value.
+#'
+#' @param coding a coding
+#' @return A coding that contains all missing codes.
+#'   If no codes are found, returns `empty_coding()`
+#' @export
+#' @examples
+#' missing_codes(coding(code("Yes", 1), code("No", 0), code("Missing", NA)))
+#' missing_codes(coding(code("Yes", 1), code("No", 0)))
 missing_codes <- function(coding) {
   rc_assert(is.coding(coding))
 

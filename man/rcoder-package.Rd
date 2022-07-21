@@ -6,8 +6,7 @@
 \alias{rcoder-package}
 \title{rcoder: Lightweight Data Structure for Recoding Categorical Data without Factors}
 \description{
-A data structure and toolkit for documenting and recoding
-    categorical data that can be shared in other statistical software.
+A data structure and toolkit for documenting and recoding categorical data that can be shared in other statistical software.
 }
 \author{
 \strong{Maintainer}: Patrick Anker \email{psanker@nyu.edu} (\href{https://orcid.org/0000-0003-2302-0445}{ORCID})

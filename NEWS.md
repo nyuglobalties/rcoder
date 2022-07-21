@@ -1,3 +1,7 @@
+# rcoder 0.2.1
+
+* Adds `missing_codes()` to extract the codes that represent missing values
+
 # rcoder 0.2.0
 
 * `link_codings` now doesn't drop unused links by default, preferring to error out instead
