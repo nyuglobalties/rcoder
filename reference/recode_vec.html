@@ -19,7 +19,7 @@ the coding object stored in that attribute will be used by default.'><!-- mathja
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcoder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
       </span>
     </div>
 
@@ -51,31 +51,42 @@ the coding object stored in that attribute will be used by default.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">recode_vec</span><span class="op">(</span><span class="va">vec</span>, <span class="va">to</span>, from <span class="op">=</span> <span class="cn">NULL</span>, .embed <span class="op">=</span> <span class="cn">TRUE</span>, .bpr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">recode_vec</span><span class="op">(</span><span class="va">vec</span>, <span class="va">to</span>, from <span class="op">=</span> <span class="cn">NULL</span>, .embed <span class="op">=</span> <span class="cn">TRUE</span>, .bpr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>vec</dt>
 <dd><p>A vector</p></dd>
+
+
 <dt>to</dt>
 <dd><p>A coding object to which the vector will be recoded</p></dd>
+
+
 <dt>from</dt>
 <dd><p>A coding object that describes the current coding
 of the vector. Defaults to the "rcoder.coding" attribute value, if
 it exists, _or_ the "bpr.coding" value (from blueprintr). If neither
 are found, `from` stays `NULL` and the function errors.</p></dd>
+
+
 <dt>.embed</dt>
 <dd><p>If `TRUE`, `from` will be stored in the "rcoder.coding"
 attribute</p></dd>
+
+
 <dt>.bpr</dt>
 <dd><p>If `TRUE`, adds the _character_ representation of
 the coding to the "bpr.coding" attribute. Used for interop with
 blueprintr variable decorations</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The recoded vector</p>
+    
+
+<p>The recoded vector</p>
     </div>
 
   </div>
@@ -90,7 +101,7 @@ blueprintr variable decorations</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
