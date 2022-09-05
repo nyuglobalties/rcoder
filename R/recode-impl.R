@@ -34,6 +34,14 @@ recode_function_tidyfast <- function(from, to, guard = FALSE) {
 }
 
 new_recode_func <- function(body, from, from_guard) {
+  # Keep recoding attribute-safe
+  body <- bquote({
+    attrs <- attributes(x)
+    x <- .(body)
+    attributes(x) <- attrs
+    x
+  })
+
   if (!identical(from_guard, FALSE)) {
     full_body <- bquote({
       all_from <- .(c(unique(from), NA))
@@ -72,5 +80,5 @@ new_recode_func <- function(body, from, from_guard) {
     full_body <- body
   }
 
-  rlang::new_function(alist(x=), full_body)
+  rlang::new_function(alist(x = ), full_body)
 }
