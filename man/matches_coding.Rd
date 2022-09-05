@@ -25,7 +25,7 @@ of a coding's values.
 }
 \section{Functions}{
 \itemize{
-\item \code{verify_matches_coding}: Rather than returning TRUE/FALSE, this function
+\item \code{verify_matches_coding()}: Rather than returning TRUE/FALSE, this function
 halts execution if `matches_coding()` returns FALSE.
-}}
 
+}}

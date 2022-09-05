@@ -1,3 +1,6 @@
+# rcoder 0.2.2
+* Fixes issue where recoding would lose attributes of recoded vector
+
 # rcoder 0.2.1
 
 * Adds `missing_codes()` to extract the codes that represent missing values
