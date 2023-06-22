@@ -214,6 +214,12 @@ as.character.coding <- function(x, include_links_from = FALSE, ...) {
   coding_call <- rlang::call2("coding", !!!code_calls)
   out <- rlang::expr_deparse(coding_call, width = 50000L)
 
+  # Sometimes there are very long codings, like a whole system's
+  # worth of schools. (2023-06-22)
+  if (length(out) > 1) {
+    out <- paste0(out, collapse = "")
+  }
+
   out
 }
 
