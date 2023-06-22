@@ -1,3 +1,6 @@
+# rcoder 0.2.3
+* Fixes issue where coding deparsing could result in multi-length character vector
+
 # rcoder 0.2.2
 * Fixes issue where recoding would lose attributes of recoded vector
 
