@@ -1,3 +1,7 @@
+# rcoder 0.3.0
+* Fill out examples for all exported functions
+* Adds `odk_to_coding()` as a complement to `coding_to_odk()`
+
 # rcoder 0.2.3
 * Fixes issue where coding deparsing could result in multi-length character vector
 
