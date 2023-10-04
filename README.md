@@ -11,7 +11,7 @@
 [![R build
 status](https://github.com/nyuglobalties/rcoder/workflows/R-CMD-check/badge.svg)](https://github.com/nyuglobalties/rcoder/actions)
 [![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
 ## Usage
@@ -148,7 +148,7 @@ new_coding %>%
 #>     attributes(x) <- attrs
 #>     x
 #> }
-#> <environment: 0x7faab54c9928>
+#> <environment: 0x7faab3ea3298>
 ```
 
 ## Installation
