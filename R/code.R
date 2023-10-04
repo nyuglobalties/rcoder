@@ -14,6 +14,15 @@
 #' @param ... Any extra metadata
 #'
 #' @export
+#' @examples
+#' code("Yes", 1)
+#' code("No", 0)
+#' code(
+#'   "No response", -88,
+#'   description = "Participant ignored question when prompted",
+#'   missing = TRUE
+#' )
+#' code("Missing", NA, links_from = c("Refused", "Absent"))
 code <- function(label,
                  value,
                  description = label,
@@ -108,3 +117,4 @@ as.data.frame.code <- function(x, ...) {
 
   as.data.frame(dplyr::as_tibble(c(x)))
 }
+

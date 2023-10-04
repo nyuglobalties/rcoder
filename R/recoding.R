@@ -25,7 +25,11 @@ make_recode_query <- function(linked_codings, from = 1, to_suffix = "to", ...) {
     collapse = "|"
   )
 
-  from_columns <- grep(from_column_patterns, names(linked_codings), value = TRUE)
+  from_columns <- grep(
+    from_column_patterns,
+    names(linked_codings),
+    value = TRUE
+  )
   to_columns <- grep(to_column_patterns, names(linked_codings), value = TRUE)
 
   if (length(from_columns) < 1) {
@@ -82,11 +86,11 @@ get_vector_attrib <- function(vec) {
 }
 
 #' Recode a vector
-#' 
+#'
 #' A simple interface to recoding a vector based on the coding linking
 #' mechanism. If the vector has the "rcoder.coding" attribute, then
 #' the coding object stored in that attribute will be used by default.
-#' 
+#'
 #' @param vec A vector
 #' @param to A coding object to which the vector will be recoded
 #' @param from A coding object that describes the current coding
@@ -99,14 +103,12 @@ get_vector_attrib <- function(vec) {
 #'   the coding to the "bpr.coding" attribute. Used for interop with
 #'   blueprintr variable decorations
 #' @return The recoded vector
-#' @export 
-recode_vec <- function(
-  vec,
-  to,
-  from = NULL,
-  .embed = TRUE,
-  .bpr = TRUE
-) {
+#' @export
+recode_vec <- function(vec,
+                       to,
+                       from = NULL,
+                       .embed = TRUE,
+                       .bpr = TRUE) {
   if (is.null(from)) {
     from <- get_vector_attrib(vec)
 
@@ -116,9 +118,9 @@ recode_vec <- function(
   }
 
   rc_assert(is.atomic(vec), "{substitute(vec)} must be a vector")
-  rc_assert(is.coding(to), "{substitute(to)} is not a `coding` object")
+  rc_assert(is_coding(to), "{substitute(to)} is not a `coding` object")
   rc_assert(
-    is.coding(from),
+    is_coding(from),
     "{substitute(from)} is not a `coding`"
   )
 
@@ -135,19 +137,19 @@ recode_vec <- function(
 }
 
 #' Adds a coding as an attribute to a vector
-#' 
+#'
 #' Stores a coding at the "rcoder.coding" attribute of a vector
-#' 
+#'
 #' @param vec A vector
 #' @param .coding A `coding` object
 #' @param .bpr Also overwrite the "bpr.coding" attribute with the character
 #'   representation of `.coding`. Used for interop with blueprintr
 #'   variable decorations.
 #' @return The vector with its "rcoder.coding" attribute set to `.coding`
-#' @export 
+#' @export
 assign_coding <- function(vec, .coding, .bpr = TRUE) {
   rc_assert(is.atomic(vec), "{substitute(vec)} must be a vector")
-  rc_assert(is.coding(.coding), "{substitute(.coding)} must be a `coding`")
+  rc_assert(is_coding(.coding), "{substitute(.coding)} must be a `coding`")
 
   set_attrs(
     vec,
@@ -155,3 +157,4 @@ assign_coding <- function(vec, .coding, .bpr = TRUE) {
     bpr.coding = if (isTRUE(.bpr)) as.character(.coding) else NULL
   )
 }
+

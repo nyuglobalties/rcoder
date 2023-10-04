@@ -11,6 +11,9 @@
 #' @param .label A label for this coding, available for interoperability
 #'
 #' @export
+#' @examples
+#' coding(code("Yes", 1), code("No", 0), code("Not applicable", NA))
+#' empty_coding()
 coding <- function(..., .label = NULL) {
   if (missing(..1)) {
     return(empty_coding())
@@ -22,7 +25,10 @@ coding <- function(..., .label = NULL) {
     rc_err("coding() only accepts code objects as arguments.")
   }
 
-  loc_labels <- lapply(seq_along(codes), function(i) list(index = i, label = codes[[i]]$label))
+  loc_labels <- lapply(
+    seq_along(codes),
+    function(i) list(index = i, label = codes[[i]]$label)
+  )
   labels <- vcapply(loc_labels, function(x) x$label)
 
   if (any(duplicated(labels))) {
@@ -70,16 +76,20 @@ empty_coding <- function() {
 #' @param x An object
 #' @return TRUE/FALSE if the object is identical to `empty_coding()`
 #' @export
+#' @examples
+#' is_empty_coding(empty_coding())
+#' is_empty_coding(coding())
+#' is_empty_coding(coding(code("Yes", 1), code("No", 0)))
 is_empty_coding <- function(x) {
   identical(x, empty_coding())
 }
 
-is.coding <- function(x) inherits(x, "coding")
+is_coding <- function(x) inherits(x, "coding")
 
 labels.coding <- function(x, ...) attr(x, "labels", exact = TRUE)
 
 select_codes_if <- function(.coding, .p, ...) {
-  rc_assert(is.coding(.coding) && is.function(.p))
+  rc_assert(is_coding(.coding) && is.function(.p))
 
   matching_codes <- vlapply(.coding, function(.x) .p(.x, ...))
 
@@ -98,7 +108,7 @@ select_codes_by_label <- function(.coding, .labels) {
 }
 
 coding_values <- function(coding) {
-  stopifnot(is.coding(coding))
+  stopifnot(is_coding(coding))
 
   if (is_empty_coding(coding)) {
     return(logical())
@@ -120,7 +130,7 @@ coding_values <- function(coding) {
 #' missing_codes(coding(code("Yes", 1), code("No", 0), code("Missing", NA)))
 #' missing_codes(coding(code("Yes", 1), code("No", 0)))
 missing_codes <- function(coding) {
-  rc_assert(is.coding(coding))
+  rc_assert(is_coding(coding))
 
   if (is_empty_coding(coding)) {
     return(coding)
@@ -154,7 +164,7 @@ coding_label <- function(coding) {
 
 #' @export
 as.data.frame.coding <- function(x,
-                                 row.names = NULL,
+                                 row.names = NULL, # nolint
                                  optional = NULL,
                                  suffix = NULL,
                                  ...) {
@@ -162,7 +172,11 @@ as.data.frame.coding <- function(x,
 
   if (!is.null(suffix)) {
     stopifnot(is.character(suffix) || is_positive_integer(suffix))
-    names(out) <- ifelse(names(out) == "link", names(out), paste0(names(out), "_", suffix))
+    names(out) <- ifelse(
+      names(out) == "link",
+      names(out),
+      paste0(names(out), "_", suffix)
+    )
   }
 
   out
@@ -233,6 +247,8 @@ as.character.coding <- function(x, include_links_from = FALSE, ...) {
 #' @param expr An expression
 #' @return An evaluated `coding` object
 #' @export
+#' @examples
+#' eval_coding('coding(code("Yes", 1), code("No", 0))')
 eval_coding <- function(expr) {
   rc_assert(rlang::is_expression(expr))
 

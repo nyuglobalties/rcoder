@@ -33,3 +33,13 @@ The most fundamental components of a `code` object are the `label` and
 `value` elements. A `code` object is essentially a key-value tuple that has
 some extra metadata.
 }
+\examples{
+code("Yes", 1)
+code("No", 0)
+code(
+  "No response", -88,
+  description = "Participant ignored question when prompted",
+  missing = TRUE
+)
+code("Missing", NA, links_from = c("Refused", "Absent"))
+}

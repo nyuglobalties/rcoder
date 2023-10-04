@@ -18,3 +18,6 @@ an unevaluated expression -- assumed to be a `coding()` call -- and evaluates
 the expression with _only_ `coding` and `code` provided to guard against
 rogue code.
 }
+\examples{
+eval_coding('coding(code("Yes", 1), code("No", 0))')
+}

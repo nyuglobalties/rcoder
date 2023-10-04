@@ -45,14 +45,14 @@ rc_err <- function(x, .envir = parent.frame(), ...) {
 
 rc_assert <- function(x, msg = NULL, .envir = parent.frame()) {
   if (is.null(msg)) {
-    deparsed <- deparse(substitute(x))
+    deparsed <- deparse1(substitute(x)) # nolint
     msg <- glue("Assertion {ui_value(deparsed)} not met")
   } else {
     msg <- glue(glue_collapse(msg, "\n"), .envir = .envir)
   }
 
   if (!isTRUE(x)) {
-    rc_err(msg)
+    rc_err(msg, .envir = .envir)
   }
 
   invisible()

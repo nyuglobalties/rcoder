@@ -29,3 +29,10 @@ of a coding's values.
 halts execution if `matches_coding()` returns FALSE.
 
 }}
+\examples{
+vec1 <- sample(1:2, 10, replace = TRUE)
+vec2 <- sample(0:1, 10, replace = TRUE)
+cdng <- coding(code("Yes", 1), code("No", 0))
+matches_coding(vec1, cdng)
+matches_coding(vec2, cdng)
+}

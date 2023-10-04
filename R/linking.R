@@ -6,16 +6,36 @@
 #'
 #' @param to A coding to be linked to
 #' @param ... Codings to be linked from
-#' @param .to_suffix A suffix signifying which columns in the output `data.frame`
-#'   came from `to`
+#' @param .to_suffix A suffix signifying which columns in the output
+#'   `data.frame` came from `to`
 #' @param .drop_unused Logical flag to drop any codes in `...` that have no
 #'   counterparts in `to`
 #' @return A `linked_coding_df` with all necessary information for a recoding
 #'   query
 #'
 #' @export
+#' @examples
+#' wave1 <- coding(
+#'   code("Yes", 1),
+#'   code("No", 2),
+#'   code("Refused", -88, missing = TRUE)
+#' )
+#' wave2 <- coding(
+#'   code("Yes", "y"),
+#'   code("No", "n"),
+#'   code("Missing", ".", missing = TRUE)
+#' )
+#' link_codings(
+#'   to = coding(
+#'     code("Yes", 1),
+#'     code("No", 0),
+#'     code("Missing", NA, links_from = c("Refused", "Missing"))
+#'   ),
+#'   wave1,
+#'   wave2
+#' )
 link_codings <- function(to, ..., .to_suffix = "to", .drop_unused = FALSE) {
-  rc_assert(is.coding(to))
+  rc_assert(is_coding(to))
 
   from <- rlang::dots_list(...)
 
@@ -23,17 +43,17 @@ link_codings <- function(to, ..., .to_suffix = "to", .drop_unused = FALSE) {
     from <- from[[1]]
   }
 
-  if (!is.coding(from)) {
+  if (!is_coding(from)) {
     if (!is.list(from)) {
       rc_err("`...` must be a coding or codings.")
     }
 
-    if (!all(vlapply(from, is.coding))) {
+    if (!all(vlapply(from, is_coding))) {
       rc_err("Not all of `...` is a coding object.")
     }
   }
 
-  if (!is.coding(from)) {
+  if (!is_coding(from)) {
     from_dat <- coding_list_to_df(from)
   } else {
     from_dat <- as.data.frame(from, suffix = 1)
@@ -86,7 +106,7 @@ coding_list_to_df <- function(coding_list) {
     # Assumed to be the wave tags
     names(coding_list)
   } else {
-    1:length(coding_list)
+    seq_along(coding_list)
   }
 
   mapped <- Map(

@@ -22,3 +22,7 @@ to be portable and not directly attached to the underlying data. Moreover,
 "empty coding" is used to represent data that has no categorical
 interpretation.
 }
+\examples{
+coding(code("Yes", 1), code("No", 0), code("Not applicable", NA))
+empty_coding()
+}
