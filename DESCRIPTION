@@ -15,7 +15,7 @@ Authors@R:
             comment = "https://steinhardt.nyu.edu/ihdsc/global-ties"))
 Description: A data structure and toolkit for documenting and recoding
     categorical data that can be shared in other statistical software.
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends:
