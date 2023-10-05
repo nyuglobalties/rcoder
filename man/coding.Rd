@@ -14,6 +14,9 @@ empty_coding()
 
 \item{.label}{A label for this coding, available for interoperability}
 }
+\value{
+A `coding` object that contains each `code` input
+}
 \description{
 A `coding` object holds a list of `code`s that map vector values to human
 readable labels. An abstraction of factors, this data structure is designed

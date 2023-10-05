@@ -12,6 +12,7 @@
 #'   for recoding purposes.
 #' @param missing Whether this `code` represents a missing response
 #' @param ... Any extra metadata
+#' @return A `code` object that contains the key-value map of label to value
 #'
 #' @export
 #' @examples

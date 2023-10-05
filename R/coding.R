@@ -9,6 +9,7 @@
 #'
 #' @param ... A collection of `code` objects
 #' @param .label A label for this coding, available for interoperability
+#' @return A `coding` object that contains each `code` input
 #'
 #' @export
 #' @examples

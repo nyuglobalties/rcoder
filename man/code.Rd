@@ -28,6 +28,9 @@ for recoding purposes.}
 
 \item{...}{Any extra metadata}
 }
+\value{
+A `code` object that contains the key-value map of label to value
+}
 \description{
 The most fundamental components of a `code` object are the `label` and
 `value` elements. A `code` object is essentially a key-value tuple that has

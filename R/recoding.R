@@ -71,15 +71,16 @@ make_recode_query <- function(linked_codings, from = 1, to_suffix = "to", ...) {
   }
 
   if (length(subset[[from_value]]) < 1) {
-    print("linked_coding:")
-    print(linked_codings)
-    print("subset:")
-    print(subset)
-    rc_err(c(
-      "A problem has occurred. ",
-      "Contact the developer with the provided ",
-      "'linked_codings' and 'subset' values."
-    ))
+    rc_err(
+      c(
+        "A problem has occurred. ",
+        "Contact the developer with the provided ",
+        "'linked_codings' and 'subset' values in ",
+        "this error object."
+      ),
+      linked_codings = linked_codings,
+      subset = subset
+    )
   }
 
   recode_function(subset[[from_value]], subset[[to_value]], ...)
