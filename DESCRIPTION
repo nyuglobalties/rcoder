@@ -1,7 +1,7 @@
 Package: rcoder
 Type: Package
 Title: Lightweight Data Structure for Recoding Categorical Data without Factors
-Version: 0.2.3
+Version: 0.3.0
 Authors@R: 
     c(person(
             given = "Patrick", 
@@ -15,7 +15,7 @@ Authors@R:
             comment = "https://steinhardt.nyu.edu/ihdsc/global-ties"))
 Description: A data structure and toolkit for documenting and recoding
     categorical data that can be shared in other statistical software.
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends:
@@ -29,3 +29,5 @@ Suggests:
     tidyfast,
     magrittr
 RoxygenNote: 7.2.1
+URL: https://github.com/nyuglobalties/rcoder
+BugReports: https://github.com/nyuglobalties/rcoder/issues

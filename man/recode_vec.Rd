@@ -31,3 +31,18 @@ A simple interface to recoding a vector based on the coding linking
 mechanism. If the vector has the "rcoder.coding" attribute, then
 the coding object stored in that attribute will be used by default.
 }
+\examples{
+# Using an explicit `from`
+vec <- sample(1:3, 50, replace = TRUE)
+cdng_old <- coding(code("Yes", 3), code("Maybe", 2), code("No", 1))
+cdng_new <- coding(code("Yes", 2), code("Maybe", 1), code("No", 0))
+recode_vec(vec, to = cdng_new, from = cdng_old)
+
+# Using an implicit `from` with assign_coding()
+vec <- sample(1:3, 50, replace = TRUE)
+vec <- assign_coding(vec, cdng_old)
+recode_vec(vec, cdng_new)
+}
+\seealso{
+[assign_coding()]
+}

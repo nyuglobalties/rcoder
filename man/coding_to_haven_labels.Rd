@@ -16,3 +16,7 @@ A named vector representation of the coding
 Converts a `coding` object into a named vector to be used in the `labels`
 parameter for `haven::labelled()`.
 }
+\examples{
+cdng <- coding(code("Yes", 1), code("No", 0))
+coding_to_haven_labels(cdng)
+}

@@ -11,8 +11,8 @@ link_codings(to, ..., .to_suffix = "to", .drop_unused = FALSE)
 
 \item{...}{Codings to be linked from}
 
-\item{.to_suffix}{A suffix signifying which columns in the output `data.frame`
-came from `to`}
+\item{.to_suffix}{A suffix signifying which columns in the output
+`data.frame` came from `to`}
 
 \item{.drop_unused}{Logical flag to drop any codes in `...` that have no
 counterparts in `to`}
@@ -25,4 +25,25 @@ A `linked_coding_df` with all necessary information for a recoding
 Coding objects can be linked together to create mappings from one or more
 codings to another. This creates a `data.frame` that outlines how the codings
 are linked, to be used in `make_recode_query()`.
+}
+\examples{
+wave1 <- coding(
+  code("Yes", 1),
+  code("No", 2),
+  code("Refused", -88, missing = TRUE)
+)
+wave2 <- coding(
+  code("Yes", "y"),
+  code("No", "n"),
+  code("Missing", ".", missing = TRUE)
+)
+link_codings(
+  to = coding(
+    code("Yes", 1),
+    code("No", 0),
+    code("Missing", NA, links_from = c("Refused", "Missing"))
+  ),
+  wave1,
+  wave2
+)
 }

@@ -20,7 +20,7 @@ and easily converts them to other implementations.
 
 <!-- badges: start -->
 [![R build status](https://github.com/nyuglobalties/rcoder/workflows/R-CMD-check/badge.svg)](https://github.com/nyuglobalties/rcoder/actions)
-[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
 ## Usage
@@ -37,7 +37,12 @@ code("Yes", 1)
 `code()` objects can hold an arbitrary amount of metadata. Useful pieces of information to know are descriptions of what levels represent (in case the label doesn't have enough information) and whether or not the value represents a missing value.
 
 ```{r}
-code("No response", -99, description = "Surveyed individual ignored question when asked", missing = TRUE)
+code(
+  "No response",
+  -99,
+  description = "Surveyed individual ignored question when asked",
+  missing = TRUE
+)
 ```
 
 `coding()` is a collection of `code()` objects that represents the full set of values for a categorical variable.
@@ -66,7 +71,7 @@ coding(
   code("Frequently", 4),
   code("Always", 5),
   .label = "frequency"
-) %>% 
+) %>%
   coding_to_odk()
 ```
 
@@ -87,23 +92,37 @@ new_coding <- coding(
   code("Missing", NA, links_from = c("No response", "Refused", "Absent"))
 )
 
-new_coding %>% 
+new_coding %>%
   link_codings(original_coding)
 ```
 
 These linked codings can be converted into a function that accepts a vector and returns a recoded vector.
 
 ```{r}
-new_coding %>% 
-  link_codings(original_coding) %>% 
+new_coding %>%
+  link_codings(original_coding) %>%
   make_recode_query()
 ```
 
 ## Installation
 
-rcoder is not yet on CRAN, so you will need to install from this repository:
+Install rcoder from CRAN with:
 
 ``` r
-install.packages("remotes")
+install.packages("rcoder")
+```
+
+To get the latest stable changes that may not be on CRAN, install from the nyuglobalties r-universe with:
+
+```r
+install.packages("rcoder", repos = "https://nyuglobalties.r-universe.dev")
+```
+
+Finally, get the development version straight from GitHub:
+
+```r
+# install.packages("remotes")
 remotes::install_github("nyuglobalties/rcoder")
 ```
+
+

@@ -9,8 +9,14 @@
 #' @return TRUE/FALSE
 #'
 #' @export
+#' @examples
+#' vec1 <- sample(1:2, 10, replace = TRUE)
+#' vec2 <- sample(0:1, 10, replace = TRUE)
+#' cdng <- coding(code("Yes", 1), code("No", 0))
+#' matches_coding(vec1, cdng)
+#' matches_coding(vec2, cdng)
 matches_coding <- function(vec, coding, ignore_empty = TRUE) {
-  rc_assert(is.coding(coding), "{ui_value(substitute(coding))} is not a coding object.")
+  rc_assert(is_coding(coding), "{ui_value(substitute(coding))} is not a coding object.")
 
   if (!is.vector(vec)) {
     return(FALSE)

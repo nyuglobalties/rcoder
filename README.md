@@ -11,7 +11,7 @@
 [![R build
 status](https://github.com/nyuglobalties/rcoder/workflows/R-CMD-check/badge.svg)](https://github.com/nyuglobalties/rcoder/actions)
 [![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
 ## Usage
@@ -35,7 +35,12 @@ case the label doesn’t have enough information) and whether or not the
 value represents a missing value.
 
 ``` r
-code("No response", -99, description = "Surveyed individual ignored question when asked", missing = TRUE)
+code(
+  "No response",
+  -99,
+  description = "Surveyed individual ignored question when asked",
+  missing = TRUE
+)
 #> <Code>
 #> label: 'No response'
 #> value: -99
@@ -59,7 +64,7 @@ coding(
   code("Absent", -77, missing = TRUE)
 )
 #> <Coding>
-#> # A tibble: 9 x 5
+#> # A tibble: 9 × 5
 #>   link        label       value description missing
 #>   <chr>       <chr>       <dbl> <chr>       <lgl>  
 #> 1 Don't know  Don't know      0 Don't know  TRUE   
@@ -86,9 +91,9 @@ coding(
   code("Frequently", 4),
   code("Always", 5),
   .label = "frequency"
-) %>% 
+) %>%
   coding_to_odk()
-#> # A tibble: 5 x 3
+#> # A tibble: 5 × 3
 #>   list_name  name label     
 #>   <chr>     <dbl> <chr>     
 #> 1 frequency     1 Never     
@@ -117,7 +122,7 @@ new_coding <- coding(
   code("Missing", NA, links_from = c("No response", "Refused", "Absent"))
 )
 
-new_coding %>% 
+new_coding %>%
   link_codings(original_coding)
 #>          link label_to value_to     label_1 value_1
 #> 1      Absent  Missing       NA      Absent     -77
@@ -131,21 +136,39 @@ These linked codings can be converted into a function that accepts a
 vector and returns a recoded vector.
 
 ``` r
-new_coding %>% 
-  link_codings(original_coding) %>% 
+new_coding %>%
+  link_codings(original_coding) %>%
   make_recode_query()
 #> function (x) 
-#> dplyr::case_when(x == -77L ~ NA_integer_, x == 0L ~ 0L, x == 
-#>     -99L ~ NA_integer_, x == -88L ~ NA_integer_, x == 1L ~ 1L)
-#> <environment: 0x7fa9e6633478>
+#> {
+#>     attrs <- attributes(x)
+#>     x <- dplyr::case_when(x == -77L ~ NA_integer_, x == 0L ~ 
+#>         0L, x == -99L ~ NA_integer_, x == -88L ~ NA_integer_, 
+#>         x == 1L ~ 1L)
+#>     attributes(x) <- attrs
+#>     x
+#> }
+#> <environment: 0x7faab3ea3298>
 ```
 
 ## Installation
 
-rcoder is not yet on CRAN, so you will need to install from this
-repository:
+Install rcoder from CRAN with:
 
 ``` r
-install.packages("remotes")
+install.packages("rcoder")
+```
+
+To get the latest stable changes that may not be on CRAN, install from
+the nyuglobalties r-universe with:
+
+``` r
+install.packages("rcoder", repos = "https://nyuglobalties.r-universe.dev")
+```
+
+Finally, get the development version straight from GitHub:
+
+``` r
+# install.packages("remotes")
 remotes::install_github("nyuglobalties/rcoder")
 ```

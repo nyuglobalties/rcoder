@@ -17,7 +17,22 @@ which the vector will be recoded}
 
 \item{...}{Any other parameters passed onto the recoding function selector}
 }
+\value{
+A function with single argument when applied to an input vector
+  will recode the vector appropriately
+}
 \description{
 This creates a function that accepts a vector and recodes it from the
-information provided in a `linked_coding_df`
+information provided in a `linked_coding_df`. Usually this is intended
+for package authors who want to operate at the recoding relational
+table level (e.g. mapping multiple codings to one). Most end users
+should use [recode_vec()] instead.
+}
+\examples{
+cdng_old <- coding(code("Yes", 1), code("No", 2))
+cdng_new <- coding(code("Yes", 1), code("No", 0))
+recode_func <- make_recode_query(link_codings(cdng_new, cdng_old))
+
+vec <- sample(1:2, 20, replace = TRUE)
+recode_func(vec)
 }

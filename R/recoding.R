@@ -1,7 +1,10 @@
 #' Make a recoding call from linked codings
 #'
 #' This creates a function that accepts a vector and recodes it from the
-#' information provided in a `linked_coding_df`
+#' information provided in a `linked_coding_df`. Usually this is intended
+#' for package authors who want to operate at the recoding relational
+#' table level (e.g. mapping multiple codings to one). Most end users
+#' should use [recode_vec()] instead.
 #'
 #' @param linked_codings A `linked_coding_df`
 #' @param from A character or integer that selects the correct original coding.
@@ -9,8 +12,16 @@
 #' @param to_suffix The suffix used to signify which columns refer to values to
 #'   which the vector will be recoded
 #' @param ... Any other parameters passed onto the recoding function selector
-#'
+#' @return A function with single argument when applied to an input vector
+#'   will recode the vector appropriately
 #' @export
+#' @examples
+#' cdng_old <- coding(code("Yes", 1), code("No", 2))
+#' cdng_new <- coding(code("Yes", 1), code("No", 0))
+#' recode_func <- make_recode_query(link_codings(cdng_new, cdng_old))
+#'
+#' vec <- sample(1:2, 20, replace = TRUE)
+#' recode_func(vec)
 make_recode_query <- function(linked_codings, from = 1, to_suffix = "to", ...) {
   stopifnot(inherits(linked_codings, "linked_coding_df"))
 
@@ -25,7 +36,11 @@ make_recode_query <- function(linked_codings, from = 1, to_suffix = "to", ...) {
     collapse = "|"
   )
 
-  from_columns <- grep(from_column_patterns, names(linked_codings), value = TRUE)
+  from_columns <- grep(
+    from_column_patterns,
+    names(linked_codings),
+    value = TRUE
+  )
   to_columns <- grep(to_column_patterns, names(linked_codings), value = TRUE)
 
   if (length(from_columns) < 1) {
@@ -56,15 +71,16 @@ make_recode_query <- function(linked_codings, from = 1, to_suffix = "to", ...) {
   }
 
   if (length(subset[[from_value]]) < 1) {
-    print("linked_coding:")
-    print(linked_codings)
-    print("subset:")
-    print(subset)
-    rc_err(c(
-      "A problem has occurred. ",
-      "Contact the developer with the provided ",
-      "'linked_codings' and 'subset' values."
-    ))
+    rc_err(
+      c(
+        "A problem has occurred. ",
+        "Contact the developer with the provided ",
+        "'linked_codings' and 'subset' values in ",
+        "this error object."
+      ),
+      linked_codings = linked_codings,
+      subset = subset
+    )
   }
 
   recode_function(subset[[from_value]], subset[[to_value]], ...)
@@ -82,11 +98,11 @@ get_vector_attrib <- function(vec) {
 }
 
 #' Recode a vector
-#' 
+#'
 #' A simple interface to recoding a vector based on the coding linking
 #' mechanism. If the vector has the "rcoder.coding" attribute, then
 #' the coding object stored in that attribute will be used by default.
-#' 
+#'
 #' @param vec A vector
 #' @param to A coding object to which the vector will be recoded
 #' @param from A coding object that describes the current coding
@@ -99,14 +115,24 @@ get_vector_attrib <- function(vec) {
 #'   the coding to the "bpr.coding" attribute. Used for interop with
 #'   blueprintr variable decorations
 #' @return The recoded vector
-#' @export 
-recode_vec <- function(
-  vec,
-  to,
-  from = NULL,
-  .embed = TRUE,
-  .bpr = TRUE
-) {
+#' @seealso [assign_coding()]
+#' @export
+#' @examples
+#' # Using an explicit `from`
+#' vec <- sample(1:3, 50, replace = TRUE)
+#' cdng_old <- coding(code("Yes", 3), code("Maybe", 2), code("No", 1))
+#' cdng_new <- coding(code("Yes", 2), code("Maybe", 1), code("No", 0))
+#' recode_vec(vec, to = cdng_new, from = cdng_old)
+#'
+#' # Using an implicit `from` with assign_coding()
+#' vec <- sample(1:3, 50, replace = TRUE)
+#' vec <- assign_coding(vec, cdng_old)
+#' recode_vec(vec, cdng_new)
+recode_vec <- function(vec,
+                       to,
+                       from = NULL,
+                       .embed = TRUE,
+                       .bpr = TRUE) {
   if (is.null(from)) {
     from <- get_vector_attrib(vec)
 
@@ -116,9 +142,9 @@ recode_vec <- function(
   }
 
   rc_assert(is.atomic(vec), "{substitute(vec)} must be a vector")
-  rc_assert(is.coding(to), "{substitute(to)} is not a `coding` object")
+  rc_assert(is_coding(to), "{substitute(to)} is not a `coding` object")
   rc_assert(
-    is.coding(from),
+    is_coding(from),
     "{substitute(from)} is not a `coding`"
   )
 
@@ -135,19 +161,24 @@ recode_vec <- function(
 }
 
 #' Adds a coding as an attribute to a vector
-#' 
+#'
 #' Stores a coding at the "rcoder.coding" attribute of a vector
-#' 
+#'
 #' @param vec A vector
 #' @param .coding A `coding` object
 #' @param .bpr Also overwrite the "bpr.coding" attribute with the character
 #'   representation of `.coding`. Used for interop with blueprintr
 #'   variable decorations.
 #' @return The vector with its "rcoder.coding" attribute set to `.coding`
-#' @export 
+#' @seealso [recode_vec()]
+#' @export
+#' @examples
+#' cdng <- coding(code("Yes", 3), code("Maybe", 2), code("No", 1))
+#' vec <- sample(1:3, 50, replace = TRUE)
+#' assign_coding(vec, cdng)
 assign_coding <- function(vec, .coding, .bpr = TRUE) {
   rc_assert(is.atomic(vec), "{substitute(vec)} must be a vector")
-  rc_assert(is.coding(.coding), "{substitute(.coding)} must be a `coding`")
+  rc_assert(is_coding(.coding), "{substitute(.coding)} must be a `coding`")
 
   set_attrs(
     vec,

@@ -21,3 +21,11 @@ The vector with its "rcoder.coding" attribute set to `.coding`
 \description{
 Stores a coding at the "rcoder.coding" attribute of a vector
 }
+\examples{
+cdng <- coding(code("Yes", 3), code("Maybe", 2), code("No", 1))
+vec <- sample(1:3, 50, replace = TRUE)
+assign_coding(vec, cdng)
+}
+\seealso{
+[recode_vec()]
+}

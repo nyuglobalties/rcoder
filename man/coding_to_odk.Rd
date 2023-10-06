@@ -21,3 +21,10 @@ that name will be associated with that categorical type coding. This function
 converts `coding` objects into tables that can be inserted into that
 'choices' sheet. The categorical type is specified with the coding `.label`.
 }
+\examples{
+cdng <- coding(code("Yes", 1), code("No", 0), .label = "yesno")
+coding_to_odk(cdng)
+}
+\seealso{
+[odk_to_coding()]
+}

@@ -15,3 +15,8 @@ TRUE/FALSE if the object is identical to `empty_coding()`
 \description{
 Is an object the empty coding?
 }
+\examples{
+is_empty_coding(empty_coding())
+is_empty_coding(coding())
+is_empty_coding(coding(code("Yes", 1), code("No", 0)))
+}
