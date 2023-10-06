@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcoder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -28,7 +28,13 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/nyuglobalties/rcoder/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -38,7 +44,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Adds a coding as an attribute to a vector</h1>
-    
+    <small class="dont-index">Source: <a href="https://github.com/nyuglobalties/rcoder/blob/HEAD/R/recoding.R" class="external-link"><code>R/recoding.R</code></a></small>
     <div class="hidden name"><code>assign_coding.Rd</code></div>
     </div>
 
@@ -72,7 +78,30 @@ variable decorations.</p></dd>
 
 <p>The vector with its "rcoder.coding" attribute set to `.coding`</p>
     </div>
+    <div id="see-also">
+    <h2>See also</h2>
+    <div class="dont-index"><p>[recode_vec()]</p></div>
+    </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">cdng</span> <span class="op">&lt;-</span> <span class="fu"><a href="coding.html">coding</a></span><span class="op">(</span><span class="fu"><a href="code.html">code</a></span><span class="op">(</span><span class="st">"Yes"</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="code.html">code</a></span><span class="op">(</span><span class="st">"Maybe"</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="code.html">code</a></span><span class="op">(</span><span class="st">"No"</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">50</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">assign_coding</span><span class="op">(</span><span class="va">vec</span>, <span class="va">cdng</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1 1 2 3 3 3 2 2 3 2 2 2 2 3 2 1 2 1 3 3 1 1 3 3 2 3 1 1 2 2 2 1 2 3 1 1 3 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [39] 2 1 1 3 3 2 1 1 1 1 3 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"rcoder.coding")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;Coding&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   link  label value description missing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Yes   Yes       3 Yes         FALSE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Maybe Maybe     2 Maybe       FALSE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> No    No        1 No          FALSE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"bpr.coding")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "coding(code(\"Yes\", 3), code(\"Maybe\", 2), code(\"No\", 1))"</span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

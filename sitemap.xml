@@ -4,6 +4,9 @@
     <loc>/404.html</loc>
   </url>
   <url>
+    <loc>/LICENSE-text.html</loc>
+  </url>
+  <url>
     <loc>/LICENSE.html</loc>
   </url>
   <url>
@@ -53,6 +56,9 @@
   </url>
   <url>
     <loc>/reference/missing_codes.html</loc>
+  </url>
+  <url>
+    <loc>/reference/odk_to_coding.html</loc>
   </url>
   <url>
     <loc>/reference/rcoder-package.html</loc>

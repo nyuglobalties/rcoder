@@ -20,7 +20,7 @@ rogue code."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcoder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -31,7 +31,13 @@ rogue code."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/nyuglobalties/rcoder/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -41,7 +47,7 @@ rogue code."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Evaluates a coding expression in a safe environment</h1>
-    
+    <small class="dont-index">Source: <a href="https://github.com/nyuglobalties/rcoder/blob/HEAD/R/coding.R" class="external-link"><code>R/coding.R</code></a></small>
     <div class="hidden name"><code>eval_coding.Rd</code></div>
     </div>
 
@@ -69,6 +75,12 @@ rogue code.</p>
 <p>An evaluated `coding` object</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">eval_coding</span><span class="op">(</span><span class="st">'coding(code("Yes", 1), code("No", 0))'</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "coding(code(\"Yes\", 1), code(\"No\", 0))"</span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

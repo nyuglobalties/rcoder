@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">rcoder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -47,7 +47,14 @@
   <a href="news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/nyuglobalties/rcoder/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -72,7 +79,7 @@
 </h2>
 <p>rcoder’s main functions are <code><a href="reference/coding.html">coding()</a></code> and <code><a href="reference/code.html">code()</a></code>. <code><a href="reference/code.html">code()</a></code> maps a character-valued key to some value to represent a categorical level.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">rcoder</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nyuglobalties/rcoder" class="external-link">rcoder</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Yes"</span>, <span class="fl">1</span><span class="op">)</span></span>
@@ -81,7 +88,12 @@
 <span><span class="co">#&gt; value: 1</span></span></code></pre></div>
 <p><code><a href="reference/code.html">code()</a></code> objects can hold an arbitrary amount of metadata. Useful pieces of information to know are descriptions of what levels represent (in case the label doesn’t have enough information) and whether or not the value represents a missing value.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"No response"</span>, <span class="op">-</span><span class="fl">99</span>, description <span class="op">=</span> <span class="st">"Surveyed individual ignored question when asked"</span>, missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span></span>
+<span>  <span class="st">"No response"</span>,</span>
+<span>  <span class="op">-</span><span class="fl">99</span>,</span>
+<span>  description <span class="op">=</span> <span class="st">"Surveyed individual ignored question when asked"</span>,</span>
+<span>  missing <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;Code&gt;</span></span>
 <span><span class="co">#&gt; label: 'No response'</span></span>
 <span><span class="co">#&gt; value: -99</span></span>
@@ -101,7 +113,7 @@
 <span>  <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Absent"</span>, <span class="op">-</span><span class="fl">77</span>, missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;Coding&gt;</span></span>
-<span><span class="co">#&gt; # A tibble: 9 x 5</span></span>
+<span><span class="co">#&gt; # A tibble: 9 × 5</span></span>
 <span><span class="co">#&gt;   link        label       value description missing</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;       &lt;lgl&gt;  </span></span>
 <span><span class="co">#&gt; 1 Don't know  Don't know      0 Don't know  TRUE   </span></span>
@@ -122,9 +134,9 @@
 <span>  <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Frequently"</span>, <span class="fl">4</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Always"</span>, <span class="fl">5</span><span class="op">)</span>,</span>
 <span>  .label <span class="op">=</span> <span class="st">"frequency"</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/coding_to_odk.html">coding_to_odk</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 5 x 3</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 3</span></span>
 <span><span class="co">#&gt;   list_name  name label     </span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;     </span></span>
 <span><span class="co">#&gt; 1 frequency     1 Never     </span></span>
@@ -148,7 +160,7 @@
 <span>  <span class="fu"><a href="reference/code.html">code</a></span><span class="op">(</span><span class="st">"Missing"</span>, <span class="cn">NA</span>, links_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"No response"</span>, <span class="st">"Refused"</span>, <span class="st">"Absent"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">new_coding</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">new_coding</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/link_codings.html">link_codings</a></span><span class="op">(</span><span class="va">original_coding</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          link label_to value_to     label_1 value_1</span></span>
 <span><span class="co">#&gt; 1      Absent  Missing       NA      Absent     -77</span></span>
@@ -158,31 +170,52 @@
 <span><span class="co">#&gt; 5         Yes      Yes        1         Yes       1</span></span></code></pre></div>
 <p>These linked codings can be converted into a function that accepts a vector and returns a recoded vector.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">new_coding</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="reference/link_codings.html">link_codings</a></span><span class="op">(</span><span class="va">original_coding</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">new_coding</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/link_codings.html">link_codings</a></span><span class="op">(</span><span class="va">original_coding</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/make_recode_query.html">make_recode_query</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (x) </span></span>
-<span><span class="co">#&gt; dplyr::case_when(x == -77L ~ NA_integer_, x == 0L ~ 0L, x == </span></span>
-<span><span class="co">#&gt;     -99L ~ NA_integer_, x == -88L ~ NA_integer_, x == 1L ~ 1L)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x7fa9e6633478&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; {</span></span>
+<span><span class="co">#&gt;     attrs &lt;- attributes(x)</span></span>
+<span><span class="co">#&gt;     x &lt;- dplyr::case_when(x == -77L ~ NA_integer_, x == 0L ~ </span></span>
+<span><span class="co">#&gt;         0L, x == -99L ~ NA_integer_, x == -88L ~ NA_integer_, </span></span>
+<span><span class="co">#&gt;         x == 1L ~ 1L)</span></span>
+<span><span class="co">#&gt;     attributes(x) &lt;- attrs</span></span>
+<span><span class="co">#&gt;     x</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x7faab3ea3298&gt;</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>rcoder is not yet on CRAN, so you will need to install from this repository:</p>
+<p>Install rcoder from CRAN with:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"rcoder"</span><span class="op">)</span></span></code></pre></div>
+<p>To get the latest stable changes that may not be on CRAN, install from the nyuglobalties r-universe with:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"rcoder"</span>, repos <span class="op">=</span> <span class="st">"https://nyuglobalties.r-universe.dev"</span><span class="op">)</span></span></code></pre></div>
+<p>Finally, get the development version straight from GitHub:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"nyuglobalties/rcoder"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
+    <div class="links">
+<h2 data-toc-skip>Links</h2>
+<ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=rcoder" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/nyuglobalties/rcoder/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/nyuglobalties/rcoder/issues" class="external-link">Report a bug</a></li>
+</ul>
+</div>
+
+<div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 
@@ -206,7 +239,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/nyuglobalties/rcoder/actions" class="external-link"><img src="https://github.com/nyuglobalties/rcoder/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
 </ul>
 </div>
 

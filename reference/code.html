@@ -19,7 +19,7 @@ some extra metadata."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcoder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -30,7 +30,13 @@ some extra metadata."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/nyuglobalties/rcoder/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -40,7 +46,7 @@ some extra metadata."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Encode a label to a value with other metadata</h1>
-    
+    <small class="dont-index">Source: <a href="https://github.com/nyuglobalties/rcoder/blob/HEAD/R/code.R" class="external-link"><code>R/code.R</code></a></small>
     <div class="hidden name"><code>code.Rd</code></div>
     </div>
 
@@ -89,7 +95,41 @@ for recoding purposes.</p></dd>
 <dd><p>Any extra metadata</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    
 
+<p>A `code` object that contains the key-value map of label to value</p>
+    </div>
+
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">code</span><span class="op">(</span><span class="st">"Yes"</span>, <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;Code&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: 'Yes'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> value: 1</span>
+<span class="r-in"><span><span class="fu">code</span><span class="op">(</span><span class="st">"No"</span>, <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;Code&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: 'No'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> value: 0</span>
+<span class="r-in"><span><span class="fu">code</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"No response"</span>, <span class="op">-</span><span class="fl">88</span>,</span></span>
+<span class="r-in"><span>  description <span class="op">=</span> <span class="st">"Participant ignored question when prompted"</span>,</span></span>
+<span class="r-in"><span>  missing <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;Code&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: 'No response'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> value: -88</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> description: 'Participant ignored question when prompted'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Represents a missing value</span>
+<span class="r-in"><span><span class="fu">code</span><span class="op">(</span><span class="st">"Missing"</span>, <span class="cn">NA</span>, links_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Refused"</span>, <span class="st">"Absent"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;Code&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: 'Missing'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> value: NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> linking from: ['Refused', 'Absent']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Represents a missing value</span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
